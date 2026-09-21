@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""创作者工作台 v1.1 - 本地 Flask 服务。"""
+"""创作者工作台 v1.2 - 本地 Flask 服务。"""
 import hashlib
 import base64
 import binascii
@@ -6316,7 +6316,148 @@ def _available_port():
     raise RuntimeError("5210-5220 端口均被占用，请关闭其他本地服务后重试")
 
 
+# ========== 知识库骨架自动搭建 ==========
+
+# 首次启动时按 Karpathy 三层结构把知识库建好：原始素材 / 维基 / 规范。
+# 已存在的文件一律不覆盖 —— 只补缺失的目录和空页。
+KNOWLEDGE_TEMPLATE_DIR = BASE_DIR / "knowledge_base_template"
+KNOWLEDGE_SEED_DIRS = (
+    "原始素材/灵感/抖音收藏夹",
+    "原始素材/微信读书",
+    "原始素材/工作笔记/01-创作中心",
+    "原始素材/附件",
+    "维基/素材摘要",
+    "维基/实体",
+    "维基/概念",
+    "维基/分析",
+    "维基/问答",
+    "规范",
+)
+
+KNOWLEDGE_SEED_PAGES = {
+    "维基/总览.md": """---
+类型: 总览
+更新: {DATE}
+---
+
+# 总览
+
+这个库现在还是空的。
+
+把素材放进 `原始素材/`（抖音收藏、微信读书划线、网页剪藏、自己写的笔记都行），
+然后跟 AI 说一句「收录新素材」——它会读素材、写维基页，再回来更新这里。
+""",
+    "维基/索引.md": """---
+类型: 索引
+更新: {DATE}
+---
+
+# 索引
+
+> 每收录一份素材，在这里加一条：
+> `- [[页面标题]] — 一句话摘要（YYYY-MM-DD，来源 N 份）`
+
+（还没有内容）
+""",
+    "维基/日志.md": """# 日志
+
+> 只追加，不改旧条目。格式见 `AGENTS.md` 第五节第 5 步。
+
+## [{DATE}] 初始化
+
+- 知识库由创作者工作台自动搭建：三层目录 + AI 契约（`AGENTS.md`）。
+- 之后每次「收录」都会在下面追加一条。
+""",
+    "维基/约定.md": """---
+类型: 约定
+更新: {DATE}
+---
+
+# 约定
+
+> AI 在这里记录使用者的操作偏好。例如「标题不要用问句」「概念页必须放具体数字」。
+> 积累起来之后，AI 写东西就会越来越贴合你的习惯。
+
+（还没有约定）
+""",
+    "原始素材/放入素材说明.md": """# 往这里放素材
+
+三层里只有这一层是你动手的。往里丢什么都行：
+
+| 来源 | 放哪 | 怎么进来 |
+|---|---|---|
+| 抖音收藏 | `灵感/抖音收藏夹/` | `Douyin Favorites Sync` 插件自动同步 |
+| 微信读书划线 | `微信读书/` | `Weread` 插件自动同步 |
+| 网页文章 | 任意位置 | `Clipper` 浏览器插件一键剪藏 |
+| 自己的笔记 | `工作笔记/` | 直接新建 `.md` |
+| 图片、音频 | `附件/` | 复制进来 |
+
+**放完跟 AI 说「收录新素材」就行。** 它只读不写，不会动你放进来的一字一句。
+
+> `工作笔记/01-创作中心/` 例外：那是工作台自动写的镜像，别手动改。
+""",
+}
+
+
+def _seed_knowledge_pages(vault, today):
+    for rel, body in KNOWLEDGE_SEED_PAGES.items():
+        path = vault / rel
+        if not path.exists():
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(body.replace("{DATE}", today), encoding="utf-8")
+
+
+def ensure_knowledge_vault():
+    """搭好知识库骨架。返回 (知识库路径, 是否本次新建)。
+
+    已配置过路径的，用配置里的；没配过的，默认建在「用户数据/知识库」并自动启用。
+    """
+    config = load_config()
+    obsidian = dict(config.get("obsidian") or {})
+    raw_path = str(obsidian.get("vault_path") or "").strip()
+    if raw_path:
+        vault = Path(raw_path).expanduser()
+        if not vault.is_absolute():
+            vault = USER_ROOT / vault
+    else:
+        vault = USER_ROOT / "知识库"
+    vault = vault.resolve()
+
+    fresh = not (vault / "AGENTS.md").exists()
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    for rel in KNOWLEDGE_SEED_DIRS:
+        (vault / rel).mkdir(parents=True, exist_ok=True)
+
+    for name in ("AGENTS.md", "说明.md"):
+        src = KNOWLEDGE_TEMPLATE_DIR / name
+        dst = vault / name
+        if src.exists() and not dst.exists():
+            dst.write_text(src.read_text(encoding="utf-8").replace("{{DATE}}", today),
+                           encoding="utf-8")
+
+    _seed_knowledge_pages(vault, today)
+
+    changed = False
+    if not raw_path:
+        obsidian["vault_path"] = str(vault)
+        changed = True
+    if fresh and not obsidian.get("enabled"):
+        obsidian["enabled"] = True
+        changed = True
+    if changed:
+        config["obsidian"] = obsidian
+        save_config(config)
+
+    return vault, fresh
+
+
 def run_workbench(open_browser=True):
+    try:
+        vault, fresh = ensure_knowledge_vault()
+        print(f"[知识库] {'已自动搭建' if fresh else '已就绪'}：{vault}")
+    except Exception as exc:
+        print(f"[知识库] 自动搭建跳过：{exc}")
     existing = _existing_workbench()
     if existing:
         if open_browser:
