@@ -89,10 +89,6 @@
                 <h1 id="pageTitle">总览</h1>
             </div>
             <div class="topbar-actions">
-                <a class="topbar-space-btn" href="/space/" title="进入写实书桌空间模式">
-                    <span class="topbar-space-orbit" aria-hidden="true"></span>
-                    空间模式
-                </a>
                 <button class="topbar-memory-btn" onclick="openMemoryForm('', 'memo')"><span>+</span> 随手记</button>
                 <span class="today-date" id="todayDate"></span>
             </div>
@@ -688,7 +684,6 @@
         <div class="settings-layout">
             <div class="settings-nav">
                 <button class="settings-tab active" data-settings="profile" onclick="switchSettingsTab('profile')">个人资料</button>
-                <button class="settings-tab" data-settings="accounts" onclick="switchSettingsTab('accounts')">账号矩阵</button>
                 <button class="settings-tab" data-settings="ai" onclick="switchSettingsTab('ai')">AI 模型</button>
                 <button class="settings-tab" data-settings="ima" onclick="switchSettingsTab('ima')">ima</button>
                 <button class="settings-tab" data-settings="obsidian" onclick="switchSettingsTab('obsidian')">Obsidian</button>
@@ -708,16 +703,6 @@
                     <label>表达风格<input id="cfgTone" class="input"></label>
                     <label>重点关注（逗号分隔）<textarea id="cfgInterests" class="textarea compact"></textarea></label>
                     <label>降低权重的话题<textarea id="cfgAvoid" class="textarea compact"></textarea></label>
-                </section>
-                <section class="settings-panel" data-panel="accounts">
-                    <div class="account-settings-heading">
-                        <div><span class="settings-kicker">CREATOR ACCOUNTS</span><h4>三个账号，各有职责</h4><p>头像、账号资料和每日数据都保存在本机。没有官方接口时，也可以快速手动更新。</p></div>
-                        <span class="local-only-badge">● 本地存储</span>
-                    </div>
-                    <div id="accountSettingsList" class="account-settings-list">
-                        <div class="matrix-loading">正在载入账号配置…</div>
-                    </div>
-                    <p class="settings-hint">抖音官方数据接口可在后续取得权限后接入；当前手动录入是稳定的备用入口。粉丝画像可填写年龄、地区和兴趣关键词。</p>
                 </section>
                 <section class="settings-panel" data-panel="ai">
                     <h4>OpenAI 兼容 AI 接口</h4>

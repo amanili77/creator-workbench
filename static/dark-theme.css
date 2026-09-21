@@ -1156,44 +1156,6 @@ button.memory-ai-pill, button.memory-edit-button { cursor: pointer; }
     .script-editor-toolbar > div { width: 100%; flex-basis: 100%; }
 }
 
-/* 空间模式试运行入口 */
-.topbar-space-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    min-height: 38px;
-    padding: 0 12px;
-    border: 1px solid rgba(91, 217, 200, .28);
-    border-radius: 12px;
-    color: #dffcf7;
-    background: linear-gradient(135deg, rgba(34, 126, 117, .2), rgba(39, 50, 79, .22));
-    text-decoration: none;
-    font-size: 13px;
-    transition: border-color .2s ease, background .2s ease, transform .2s ease;
-}
-
-.topbar-space-btn:hover {
-    border-color: rgba(102, 230, 211, .58);
-    background: linear-gradient(135deg, rgba(39, 153, 140, .3), rgba(55, 61, 103, .3));
-    transform: translateY(-1px);
-}
-
-.topbar-space-btn small {
-    padding: 3px 6px;
-    border-radius: 999px;
-    color: #f3ca7a;
-    background: rgba(214, 165, 74, .12);
-    font-size: 10px;
-    letter-spacing: .04em;
-}
-
-.topbar-space-orbit {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #67e1cf;
-    box-shadow: 0 0 0 4px rgba(103, 225, 207, .1), 0 0 14px rgba(103, 225, 207, .8);
-}
 
 /* 嵌入模式（DSH iframe）：隐藏本应用侧栏，主区撑满 */
 html.wb-embedded .sidebar { display: none !important; }

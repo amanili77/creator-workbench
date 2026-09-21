@@ -16,7 +16,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.1.0"
 BASE_DIR = Path(__file__).resolve().parent
 USER_ROOT = Path(os.environ.get("WORKBENCH_USER_DATA", BASE_DIR / "用户数据")).resolve()
 DB_DIR = USER_ROOT / "数据库"
