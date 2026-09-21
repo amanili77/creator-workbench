@@ -1,0 +1,688 @@
+/* Obsidian Amber theme: warm charcoal surfaces with a restrained brass accent. */
+:root {
+    color-scheme: dark;
+    --bg-base: #0f0e0c;
+    --bg-sidebar: #141210;
+    --bg-card: #1b1814;
+    --bg-hover: #252019;
+    --bg-input: #100e0c;
+    --text-primary: #f1eadf;
+    --text-secondary: #b9ad9e;
+    --text-muted: #7e7264;
+    --accent: #d7a454;
+    --accent-dim: #b67a2e;
+    --accent-bg: rgba(215, 164, 84, .12);
+    --green: #7ca58a;
+    --orange: #d7a454;
+    --red: #c86c5d;
+    --purple: #a28bbc;
+    --pink: #c87867;
+    --border: #392f25;
+    --border-light: #493b2d;
+    --home-accent: #e0ad5d;
+    --home-accent-strong: #f0c77f;
+    --home-accent-soft: rgba(224, 173, 93, .12);
+    --home-panel: #1a1713;
+    --home-panel-deep: #100e0c;
+    --home-border: rgba(224, 173, 93, .22);
+}
+
+html,
+body {
+    background-color: #0f0e0c;
+}
+
+body {
+    color: var(--text-primary);
+    background:
+        radial-gradient(circle at 88% 3%, rgba(174, 108, 38, .12), transparent 28%),
+        radial-gradient(circle at 16% 82%, rgba(113, 88, 55, .08), transparent 36%),
+        linear-gradient(180deg, #12100e 0%, #0c0b09 100%);
+}
+
+body::before {
+    opacity: .16;
+}
+
+::selection {
+    background: rgba(224, 173, 93, .28);
+    color: #fff7eb;
+}
+
+* {
+    scrollbar-color: rgba(215, 164, 84, .28) rgba(16, 14, 12, .4);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #493825;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6a4b29;
+}
+
+.sidebar {
+    border-right-color: #2c261f !important;
+    background: rgba(20, 18, 16, .98) !important;
+    box-shadow: 14px 0 42px rgba(0, 0, 0, .24);
+}
+
+.sidebar-logo-mark {
+    background: linear-gradient(145deg, #765128, #3c2c1b) !important;
+    color: #ffe2a7 !important;
+    box-shadow: inset 0 0 0 1px rgba(240, 199, 127, .28) !important;
+}
+
+.sidebar-logo-copy strong,
+.topbar h1 {
+    color: #f5eee4 !important;
+}
+
+.sidebar-logo-copy small,
+.nav-group-label,
+.streak-label,
+.topbar-kicker {
+    color: #807468 !important;
+}
+
+.sidebar-streak,
+.btn-checkin,
+.btn-settings {
+    border-color: #382f26 !important;
+    background: #191612 !important;
+}
+
+.streak-num {
+    color: #e0ad5d !important;
+}
+
+.nav-item {
+    color: #9d9184 !important;
+}
+
+.nav-item:hover {
+    border-color: #4a3b2c !important;
+    background: #211c16 !important;
+    color: #f1e8dc !important;
+}
+
+.nav-item.active {
+    border-color: rgba(224, 173, 93, .38) !important;
+    background: rgba(224, 173, 93, .11) !important;
+    color: #f0c77f !important;
+}
+
+.sidebar-footer {
+    border-top-color: #302920 !important;
+}
+
+.btn-checkin.btn-in,
+.btn-checkin.done {
+    border-color: rgba(124, 165, 138, .32) !important;
+    background: rgba(124, 165, 138, .09) !important;
+    color: #9bc0a7 !important;
+}
+
+.topbar {
+    border-bottom-color: rgba(236, 218, 193, .07) !important;
+    background: rgba(15, 14, 12, .86) !important;
+}
+
+.today-date,
+.topbar-space-btn,
+.topbar-memory-btn {
+    border-color: #403428 !important;
+    background: rgba(31, 27, 22, .84) !important;
+    color: #c4b7a7 !important;
+}
+
+.topbar-space-btn:hover,
+.topbar-memory-btn:hover {
+    border-color: rgba(224, 173, 93, .45) !important;
+    background: rgba(224, 173, 93, .1) !important;
+    color: #f4d39a !important;
+}
+
+.topbar-space-orbit,
+.assistant-online-dot,
+.assistant-fab i {
+    background: #d7a454 !important;
+    box-shadow: 0 0 12px rgba(215, 164, 84, .5) !important;
+}
+
+.card,
+.editorial-card,
+.form-card,
+.journal-form,
+.journal-history-card,
+.health-grid .card,
+.topic-card,
+.personal-digest-item,
+.account-config-card,
+.checkin-card,
+.dashboard-check-wall-card,
+.dashboard-recall-card,
+.dashboard-hot-pair-card {
+    border-color: #3a3026 !important;
+    background: #1a1713 !important;
+    color: #c8bcad !important;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .2);
+}
+
+.card:hover,
+.topic-card:hover,
+.personal-digest-item:hover {
+    border-color: #54422f !important;
+}
+
+input,
+textarea,
+select,
+.input,
+.textarea,
+.editor-title,
+.editor-content,
+.path-box,
+.config-state {
+    border-color: #403429 !important;
+    background: #110f0d !important;
+    color: #eee5da !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+.editor-content:empty::before {
+    color: #6f655a !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.editor-title:focus,
+.editor-content:focus {
+    border-color: #b67a2e !important;
+    box-shadow: 0 0 0 3px rgba(215, 164, 84, .1) !important;
+    outline: none;
+}
+
+.btn-primary,
+.assistant-send-btn,
+.idea-stream-actions button.primary,
+.dashboard-checkin-actions button:first-child {
+    border-color: #c08a42 !important;
+    background: #ad702b !important;
+    color: #fff8ee !important;
+    box-shadow: 0 8px 22px rgba(117, 70, 24, .2);
+}
+
+.btn-primary:hover,
+.assistant-send-btn:hover,
+.idea-stream-actions button.primary:hover {
+    border-color: #e0ad5d !important;
+    background: #c28235 !important;
+}
+
+.btn-ghost,
+.btn-secondary,
+.btn-icon,
+.idea-filter,
+.idea-stream-actions button,
+.idea-stream-actions span {
+    border-color: #403429 !important;
+    background: #191612 !important;
+    color: #a99d8f !important;
+}
+
+.btn-ghost:hover,
+.btn-secondary:hover,
+.btn-icon:hover,
+.idea-filter:hover {
+    border-color: #5b4732 !important;
+    background: #252019 !important;
+    color: #eee4d8 !important;
+}
+
+.editorial-hero,
+.globe-hero {
+    border-color: rgba(224, 173, 93, .24) !important;
+    background:
+        radial-gradient(circle at 78% 34%, rgba(197, 128, 46, .13), transparent 31%),
+        radial-gradient(circle at 7% 100%, rgba(125, 91, 53, .11), transparent 38%),
+        linear-gradient(126deg, #211b14 0%, #17130f 55%, #100e0c 100%) !important;
+    box-shadow: 0 28px 74px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255, 235, 201, .04) !important;
+}
+
+.globe-hero::before {
+    background: linear-gradient(104deg, rgba(255, 225, 177, .035), transparent 40%) !important;
+}
+
+.globe-hero .assistant-overline,
+.assistant-overline,
+.calendar-eyebrow,
+.editorial-card > header span {
+    color: #e0ad5d !important;
+}
+
+.globe-hero .assistant-overline i {
+    background: #e0ad5d !important;
+}
+
+.globe-hero h2,
+.editorial-hero h2,
+.editorial-dashboard .editorial-card > header h3 {
+    color: #f4ecdf !important;
+}
+
+.globe-hero-copy > p,
+.editorial-hero-copy > p {
+    color: #bcae9e !important;
+}
+
+.globe-hero .assistant-overview-btn,
+.globe-controls button {
+    border-color: #47382a !important;
+    background: rgba(29, 25, 20, .86) !important;
+    color: #c9bcab !important;
+}
+
+.globe-hero .assistant-overview-btn:hover,
+.globe-controls button:hover {
+    border-color: rgba(224, 173, 93, .48) !important;
+    background: rgba(224, 173, 93, .11) !important;
+    color: #f2d39e !important;
+}
+
+.globe-hero .assistant-overview-btn.primary {
+    border-color: #c08a42 !important;
+    background: #ad702b !important;
+    color: #fff8ee !important;
+}
+
+.globe-hero .editorial-meta span {
+    border-color: #3e3329 !important;
+    background: rgba(255, 236, 205, .025) !important;
+    color: #8f8274 !important;
+}
+
+.globe-hero .editorial-meta b {
+    color: #e5dbcd !important;
+}
+
+.globe-hero-copy > small {
+    color: #796e63 !important;
+}
+
+.globe-visual {
+    filter: sepia(.08) saturate(.96);
+}
+
+.editorial-dashboard .editorial-card,
+.editorial-dashboard .dashboard-check-wall-card,
+.editorial-dashboard .dashboard-recall-card,
+.editorial-dashboard .dashboard-hot-pair-card {
+    border-color: #3b3026 !important;
+    background: linear-gradient(148deg, rgba(30, 26, 21, .98), rgba(19, 16, 13, .98)) !important;
+}
+
+.editorial-dashboard .editorial-card > header,
+.editorial-dashboard .dashboard-check-wall-card > header,
+.editorial-dashboard .dashboard-recall-card > header,
+.editorial-dashboard .dashboard-hot-pair-card > header {
+    border-bottom-color: #352b22 !important;
+}
+
+.dashboard-check-wall .dashboard-check-item,
+.dashboard-recall-ideas > *,
+.dashboard-dual-hotspots > *,
+.editorial-feed-item,
+.overview-topic-item {
+    border-color: #372d24 !important;
+    background: #16130f !important;
+}
+
+.dashboard-check-wall .dashboard-check-item:hover,
+.dashboard-recall-ideas > *:hover,
+.dashboard-dual-hotspots > *:hover,
+.editorial-feed-item:hover,
+.overview-topic-item:hover {
+    border-color: #59442e !important;
+    background: #211c16 !important;
+}
+
+.dashboard-check-wall .dashboard-check-item.done {
+    border-color: rgba(124, 165, 138, .25) !important;
+    background: rgba(124, 165, 138, .08) !important;
+}
+
+.assistant-mini-avatar.assistant-symbol,
+.assistant-fab-avatar.assistant-symbol {
+    border-color: #5b4429 !important;
+    background: #241b11 !important;
+    color: #efc57f !important;
+}
+
+.assistant-fab {
+    border-color: #5a4228 !important;
+    background: rgba(22, 18, 13, .96) !important;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .34) !important;
+}
+
+.assistant-fab:hover {
+    border-color: #b67a2e !important;
+}
+
+.assistant-chat,
+.assistant-chat-panel,
+.assistant-modal,
+.note-modal,
+.settings-modal {
+    border-color: #403328 !important;
+    background: linear-gradient(160deg, #1e1a15, #100e0c 78%) !important;
+    color: #ded4c7 !important;
+}
+
+.assistant-chat-header,
+.settings-header,
+.settings-footer,
+.note-modal-header {
+    border-color: #362c23 !important;
+    background: rgba(255, 238, 211, .018) !important;
+}
+
+.assistant-message-bubble,
+.assistant-prompts button {
+    border-color: #3d3228 !important;
+    background: #211c16 !important;
+    color: #c1b5a7 !important;
+}
+
+.assistant-message.user .assistant-message-bubble {
+    border-color: rgba(215, 164, 84, .22) !important;
+    background: rgba(215, 164, 84, .1) !important;
+    color: #e7cfa9 !important;
+}
+
+.assistant-chat-composer {
+    border-color: #403328 !important;
+    background: #100e0c !important;
+}
+
+.idea-source-tabs,
+.idea-panel-header,
+.idea-search,
+.idea-stream-item,
+.hotspot-panel,
+.hotspot-item,
+.archive-panel,
+.journal-entry,
+.health-entry {
+    border-color: #3a3026 !important;
+    background: #191612 !important;
+}
+
+.idea-source-tabs button.active,
+.idea-filter.active,
+.settings-tab.active,
+.mood-btn.active {
+    border-color: rgba(215, 164, 84, .35) !important;
+    background: rgba(215, 164, 84, .11) !important;
+    color: #edc47f !important;
+}
+
+.idea-stream-item:hover,
+.hotspot-item:hover {
+    border-color: #54412e !important;
+    background: #211c16 !important;
+}
+
+.feed-source.ima,
+.feed-source.obsidian,
+.idea-source.ima,
+.idea-source.obsidian,
+.idea-source-icon.ima,
+.idea-source-icon.obsidian,
+.idea-status-badge.ok {
+    border-color: rgba(124, 165, 138, .28) !important;
+    background: rgba(124, 165, 138, .1) !important;
+    color: #9ebfaa !important;
+}
+
+.feed-source.douyin,
+.idea-source.douyin,
+.idea-source-icon.douyin,
+.idea-status-badge.error {
+    border-color: rgba(200, 108, 93, .28) !important;
+    background: rgba(200, 108, 93, .1) !important;
+    color: #da897c !important;
+}
+
+.idea-status-badge.warn,
+.idea-operation-progress.running {
+    border-color: rgba(215, 164, 84, .28) !important;
+    background: rgba(215, 164, 84, .09) !important;
+    color: #dcb06d !important;
+}
+
+.scripts-layout,
+.scripts-sidebar,
+.script-editor-area,
+.script-editor,
+.script-library,
+.script-trash-panel {
+    border-color: #392f25 !important;
+    background: #171410 !important;
+}
+
+.script-item:hover {
+    background: #221d17 !important;
+}
+
+.script-item.active {
+    border-color: rgba(215, 164, 84, .3) !important;
+    background: rgba(215, 164, 84, .1) !important;
+}
+
+.editor-learning-section,
+.script-assist-result,
+.script-assist-panel {
+    border-color: #3d3228 !important;
+    background: #1c1814 !important;
+}
+
+.settings-nav {
+    border-color: #382e25 !important;
+    background: #14110e !important;
+}
+
+.settings-tab {
+    color: #9e9182 !important;
+}
+
+/* Monthly calendar */
+#tab-weekly {
+    --calendar-border: rgba(224, 173, 93, .18);
+    --calendar-border-strong: rgba(224, 173, 93, .45);
+    --calendar-panel: #1a1713;
+    --calendar-panel-deep: #100e0c;
+    --calendar-muted: #7d7164;
+}
+
+.calendar-title-block h2 {
+    color: #f2e9dc !important;
+}
+
+.calendar-nav-button,
+.calendar-today-button {
+    border-color: #403429 !important;
+    background: rgba(27, 23, 18, .88) !important;
+    color: #b9ad9e !important;
+}
+
+.calendar-nav-button:hover,
+.calendar-today-button:hover {
+    border-color: rgba(224, 173, 93, .48) !important;
+    background: rgba(224, 173, 93, .1) !important;
+    color: #f1d09a !important;
+}
+
+.calendar-new-button {
+    border-color: #b86c47 !important;
+    background: #a75b38 !important;
+    box-shadow: 0 8px 22px rgba(92, 44, 23, .24) !important;
+}
+
+.calendar-new-button:hover {
+    background: #bb6b43 !important;
+}
+
+.calendar-plan-form {
+    border-color: rgba(224, 173, 93, .42) !important;
+    background: #201b15 !important;
+}
+
+.calendar-plan-form .input,
+.calendar-plan-form .textarea {
+    border-color: #44372a !important;
+    background: #110f0c !important;
+}
+
+.calendar-scroll {
+    border-color: #3b3026 !important;
+    background: #100e0c !important;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, .32), inset 0 1px 0 rgba(255, 233, 196, .025) !important;
+}
+
+.calendar-weekdays {
+    border-bottom-color: #403429 !important;
+    background: #201b16 !important;
+}
+
+.calendar-weekdays span {
+    border-right-color: rgba(224, 173, 93, .09) !important;
+    color: #9e9182 !important;
+}
+
+.calendar-day {
+    border-color: rgba(224, 173, 93, .1) !important;
+    background: #191612 !important;
+}
+
+.calendar-day.is-weekend {
+    background: #16130f !important;
+}
+
+.calendar-day.is-outside {
+    background: #100e0c !important;
+}
+
+.calendar-day:hover {
+    background: #211c16 !important;
+    box-shadow: inset 0 0 0 1px rgba(224, 173, 93, .14) !important;
+}
+
+.calendar-day.is-today {
+    background: #241d14 !important;
+    box-shadow: inset 0 3px 0 #e0ad5d !important;
+}
+
+.calendar-date-button {
+    color: #c8bcad !important;
+}
+
+.calendar-date-button small {
+    color: #e0ad5d !important;
+}
+
+.is-today .calendar-date-button > span {
+    background: #e0ad5d !important;
+    color: #171008 !important;
+}
+
+.calendar-add-button {
+    color: #7c6a58 !important;
+}
+
+.calendar-day:hover .calendar-add-button,
+.calendar-add-button:focus-visible {
+    border-color: rgba(224, 173, 93, .27) !important;
+    background: rgba(224, 173, 93, .08) !important;
+    color: #e0ad5d !important;
+}
+
+.calendar-task {
+    border-color: #41352a !important;
+    border-left-color: #8c755d !important;
+    background: #231e18 !important;
+    color: #e2d8cb !important;
+}
+
+.calendar-task.status-doing {
+    border-left-color: #e0ad5d !important;
+    background: #2a2116 !important;
+}
+
+.calendar-task.status-done {
+    border-left-color: #7ca58a !important;
+}
+
+.calendar-task:hover,
+.calendar-task:focus-visible {
+    border-color: rgba(224, 173, 93, .38) !important;
+    background: #2c251d !important;
+}
+
+.calendar-task p,
+.calendar-task.done strong,
+.month-summary-label,
+#tab-weekly .week-stat {
+    color: #8d8173 !important;
+}
+
+.calendar-task-check,
+.calendar-task-delete {
+    border-color: #504132 !important;
+    color: #9d8d7d !important;
+}
+
+.calendar-task.done .calendar-task-check {
+    border-color: #7ca58a !important;
+    background: #7ca58a !important;
+    color: #111710 !important;
+}
+
+.calendar-task-delete:hover {
+    background: rgba(200, 108, 93, .13) !important;
+    color: #db897c !important;
+}
+
+.calendar-day:hover .calendar-day-empty,
+.calendar-day-empty:focus-visible {
+    border-color: rgba(224, 173, 93, .16) !important;
+    background: rgba(224, 173, 93, .035) !important;
+    color: #867665 !important;
+}
+
+#tab-weekly .week-summary {
+    border-color: #3b3026 !important;
+    background: rgba(26, 23, 19, .8) !important;
+}
+
+#tab-weekly .week-stat strong {
+    color: #e5dccf !important;
+}
+
+.calendar-nav-button:focus-visible,
+.calendar-today-button:focus-visible,
+.calendar-date-button:focus-visible,
+.calendar-day-empty:focus-visible,
+.globe-controls button:focus-visible,
+.assistant-overview-btn:focus-visible {
+    outline-color: #e0ad5d !important;
+}
+
+@media (prefers-contrast: more) {
+    :root {
+        --border: #584737;
+        --text-muted: #9d9184;
+    }
+}

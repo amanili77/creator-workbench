@@ -1,0 +1,875 @@
+/*
+ * Module glass pass
+ *
+ * The cosmos and perspective grid live on body::before/body::after in
+ * glass-theme.css.  A few older module styles still paint opaque navy cards
+ * on top of that scene, so this file is intentionally loaded last.  It keeps
+ * the existing information architecture and controls, while giving every
+ * secondary module the same three glass levels as the overview and calendar:
+ * a clear outer surface, a softer inner surface, and a deep readable field.
+ */
+
+:root {
+    --module-glass-surface:
+        radial-gradient(120% 100% at 0% 0%, rgba(151, 196, 243, .12), transparent 48%),
+        linear-gradient(145deg, rgba(24, 42, 63, .50), rgba(5, 13, 23, .53));
+    --module-glass-soft:
+        radial-gradient(110% 100% at 0% 0%, rgba(143, 190, 240, .075), transparent 52%),
+        linear-gradient(145deg, rgba(21, 42, 66, .34), rgba(5, 14, 25, .36));
+    --module-glass-deep:
+        linear-gradient(145deg, rgba(10, 25, 42, .57), rgba(3, 10, 19, .63));
+    --module-line: rgba(155, 199, 242, .25);
+    --module-line-soft: rgba(132, 177, 222, .17);
+    --module-line-bright: rgba(202, 228, 255, .43);
+    --module-text: #edf5ff;
+    --module-text-soft: #b5c6d9;
+    --module-text-muted: #8295ab;
+    --module-blue: #79c4ff;
+    --module-radius: 18px;
+}
+
+/* Shared surfaces ------------------------------------------------------- */
+
+#tab-hotspots .today-overview > div,
+#tab-hotspots .view-explainer,
+#tab-hotspots .source-method-note,
+#tab-hotspots .today-event-card,
+#tab-hotspots .source-card,
+#tab-hotspots .hotspot-panel,
+#tab-hotspots .hotspot-item,
+#tab-inspirations .idea-unified-panel,
+#tab-inspirations .idea-stream-toolbar,
+#tab-inspirations .idea-load-more,
+#tab-inspirations .douyin-login-prompt,
+#tab-inspirations .douyin-analysis-section,
+#tab-topics .topic-featured-section,
+#tab-topics .topic-directory-panel,
+#tab-topics .topic-series-group,
+#tab-topics .topic-single-group,
+#tab-topics .topic-trash-panel,
+#tab-scripts .scripts-layout,
+#tab-scripts .scripts-sidebar,
+#tab-scripts .script-editor-area,
+#tab-scripts .script-editor,
+#tab-archive .memory-hero,
+#tab-journal .journal-form,
+#tab-journal .journal-history-card,
+#tab-health .health-grid > .card,
+#settingsModal .settings-modal {
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: var(--module-line) !important;
+    background: var(--module-glass-surface) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(148%) brightness(1.04) !important;
+    backdrop-filter: blur(24px) saturate(148%) brightness(1.04) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.13),
+        inset 1px 0 rgba(218,239,255,.055),
+        inset 0 -1px 0 rgba(0,0,0,.42),
+        0 20px 48px rgba(0,5,14,.27) !important;
+}
+
+#tab-hotspots .today-overview > div,
+#tab-hotspots .today-event-card,
+#tab-hotspots .source-card,
+#tab-inspirations .idea-load-more,
+#tab-inspirations .douyin-stat-card,
+#tab-inspirations .douyin-video-card,
+#tab-topics .topic-series-items,
+#tab-topics .topic-compact-row,
+#tab-topics .topic-card,
+#tab-scripts .script-item,
+#tab-scripts .script-final-archive,
+#tab-archive .memory-card,
+#tab-health .reward-item,
+#tab-journal .journal-entry {
+    border-color: var(--module-line-soft) !important;
+    background: var(--module-glass-soft) !important;
+    -webkit-backdrop-filter: blur(15px) saturate(138%) !important;
+    backdrop-filter: blur(15px) saturate(138%) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.065), 0 10px 28px rgba(0,5,14,.16) !important;
+}
+
+/* Keep the scene visible between cards without changing layout spacing. */
+#tab-hotspots,
+#tab-inspirations,
+#tab-topics,
+#tab-scripts,
+#tab-archive,
+#tab-journal,
+#tab-health,
+#settingsModal .settings-panels {
+    background: transparent !important;
+}
+
+/* Readable type on the cooler glass. */
+#tab-hotspots h2,
+#tab-hotspots h3,
+#tab-inspirations h3,
+#tab-topics h3,
+#tab-scripts h3,
+#tab-archive h2,
+#tab-journal h3,
+#tab-health h3,
+#settingsModal h3,
+#settingsModal h4 {
+    color: var(--module-text) !important;
+    text-shadow: 0 1px 14px rgba(95, 164, 235, .12);
+}
+
+#tab-hotspots p,
+#tab-inspirations p,
+#tab-topics p,
+#tab-scripts p,
+#tab-archive p,
+#tab-journal label,
+#tab-health label,
+#settingsModal p {
+    color: var(--module-text-soft);
+}
+
+/* Signal / source ------------------------------------------------------- */
+
+#tab-hotspots .today-overview {
+    gap: 12px;
+}
+
+#tab-hotspots .today-overview > div {
+    min-height: 82px;
+    border-radius: 16px;
+}
+
+#tab-hotspots .today-overview > div:last-child {
+    background:
+        radial-gradient(110% 100% at 0% 0%, rgba(110, 180, 255, .13), transparent 54%),
+        linear-gradient(145deg, rgba(23, 53, 83, .42), rgba(6, 17, 30, .43)) !important;
+}
+
+#tab-hotspots .hotspot-view-tabs {
+    border: 1px solid var(--module-line-soft) !important;
+    border-radius: 14px;
+    padding: 5px !important;
+    background: rgba(7, 16, 28, .40) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(145%) !important;
+    backdrop-filter: blur(22px) saturate(145%) !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.08), 0 12px 30px rgba(0,5,14,.18);
+}
+
+#tab-hotspots .view-tab {
+    border: 1px solid transparent !important;
+    color: var(--module-text-muted) !important;
+    background: transparent !important;
+}
+
+#tab-hotspots .view-tab:hover,
+#tab-hotspots .view-tab.active {
+    border-color: rgba(123, 190, 255, .38) !important;
+    color: #e6f4ff !important;
+    background:
+        radial-gradient(100% 100% at 0% 0%, rgba(151, 205, 255, .14), transparent 58%),
+        rgba(48, 105, 168, .24) !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.10), 0 0 18px rgba(59,139,232,.10);
+}
+
+#tab-hotspots .today-event-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 116px;
+    border-radius: 17px;
+    background:
+        radial-gradient(90% 150% at 0% 0%, rgba(109, 174, 239, .10), transparent 55%),
+        linear-gradient(145deg, rgba(17, 38, 61, .43), rgba(5, 14, 25, .45)) !important;
+}
+
+#tab-hotspots .today-event-card::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+    background: linear-gradient(105deg, rgba(255,255,255,.035), transparent 32%, transparent 75%, rgba(115,181,241,.025));
+}
+
+#tab-hotspots .today-event-card:hover,
+#tab-hotspots .source-card:hover,
+#tab-hotspots .hotspot-item:hover {
+    border-color: rgba(129, 198, 255, .48) !important;
+    background:
+        radial-gradient(100% 120% at 0% 0%, rgba(119, 190, 255, .14), transparent 55%),
+        linear-gradient(145deg, rgba(24, 53, 84, .51), rgba(7, 18, 32, .49)) !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.11), 0 14px 34px rgba(0,8,21,.24) !important;
+}
+
+#tab-hotspots .today-event-rank {
+    color: #8ecbff !important;
+    text-shadow: 0 0 16px rgba(91, 175, 255, .35);
+}
+
+#tab-hotspots .today-event-body h3,
+#tab-hotspots .source-card strong,
+#tab-hotspots .hotspot-item strong {
+    color: #eef6ff !important;
+}
+
+#tab-hotspots .today-event-body p,
+#tab-hotspots .source-card span,
+#tab-hotspots .hotspot-item p {
+    color: #a7b9cc !important;
+}
+
+#tab-hotspots .source-card,
+#tab-hotspots .hotspot-item {
+    border-radius: 14px;
+}
+
+/* Inspiration feeds ---------------------------------------------------- */
+
+#tab-inspirations .idea-source-tabs {
+    border: 1px solid var(--module-line) !important;
+    background: rgba(8, 18, 30, .45) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(145%) !important;
+    backdrop-filter: blur(22px) saturate(145%) !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.09), 0 14px 34px rgba(0,5,14,.20);
+}
+
+#tab-inspirations .idea-source-tabs button {
+    border: 1px solid transparent !important;
+    color: var(--module-text-muted) !important;
+}
+
+#tab-inspirations .idea-source-tabs button.active {
+    border-color: rgba(121, 195, 255, .36) !important;
+    background: rgba(48, 104, 169, .25) !important;
+    color: #e6f5ff !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.1), 0 0 18px rgba(62, 139, 231, .12) !important;
+}
+
+#tab-inspirations .idea-unified-panel {
+    overflow: hidden;
+    border-radius: 20px !important;
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(115, 175, 230, .10), transparent 48%),
+        linear-gradient(145deg, rgba(17, 35, 55, .47), rgba(5, 13, 23, .52)) !important;
+}
+
+#tab-inspirations .idea-panel-header,
+#tab-inspirations .idea-stream-toolbar {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(7, 17, 29, .34) !important;
+}
+
+#tab-inspirations .idea-stream-toolbar {
+    border: 1px solid var(--module-line-soft) !important;
+    border-radius: 14px;
+    padding: 8px;
+}
+
+#tab-inspirations .idea-search,
+#tab-inspirations .idea-stream-item,
+#tab-inspirations .douyin-stat-card,
+#tab-inspirations .douyin-video-card,
+#tab-inspirations .douyin-btn-analyze-selected,
+#tab-inspirations .douyin-login-prompt,
+#tab-inspirations .douyin-analysis-section {
+    border-color: var(--module-line-soft) !important;
+    background: var(--module-glass-soft) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(135%) !important;
+    backdrop-filter: blur(14px) saturate(135%) !important;
+}
+
+#tab-inspirations .idea-stream-item:hover,
+#tab-inspirations .douyin-video-card:hover,
+#tab-inspirations .douyin-btn-analyze-selected:hover {
+    border-color: rgba(126, 198, 255, .46) !important;
+    background: rgba(30, 65, 101, .40) !important;
+}
+
+#tab-inspirations .idea-load-more {
+    color: #c6e4ff !important;
+    background: rgba(22, 50, 80, .35) !important;
+}
+
+#tab-inspirations .idea-load-more:hover {
+    border-color: rgba(128, 199, 255, .5) !important;
+    background: rgba(39, 87, 139, .43) !important;
+}
+
+/* Topic library -------------------------------------------------------- */
+
+#tab-topics .topic-top-controls,
+#tab-scripts .script-top-controls {
+    border-radius: 16px;
+}
+
+#tab-topics .account-lane,
+#tab-scripts .account-lane {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(12, 26, 43, .38) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(135%);
+    backdrop-filter: blur(14px) saturate(135%);
+}
+
+#tab-topics .account-lane:hover,
+#tab-scripts .account-lane:hover,
+#tab-topics .account-lane.active,
+#tab-scripts .account-lane.active {
+    border-color: rgba(124, 195, 255, .48) !important;
+    background: rgba(46, 99, 157, .30) !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.1), 0 0 18px rgba(50,128,220,.11);
+}
+
+#tab-topics .topic-featured-section,
+#tab-topics .topic-directory-panel {
+    overflow: hidden;
+    border-radius: 19px !important;
+}
+
+#tab-topics .topic-featured-section > header,
+#tab-topics .topic-directory-header {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(8, 18, 31, .27) !important;
+}
+
+#tab-topics .topic-focus-card,
+#tab-topics .topic-directory-card,
+#tab-topics .topic-card {
+    border-color: var(--module-line-soft) !important;
+    background: var(--module-glass-soft) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(135%) !important;
+    backdrop-filter: blur(14px) saturate(135%) !important;
+}
+
+#tab-topics .topic-focus-card:hover,
+#tab-topics .topic-directory-card:hover,
+#tab-topics .topic-card:hover,
+#tab-topics .topic-compact-row:hover {
+    border-color: rgba(126, 199, 255, .48) !important;
+    background: rgba(34, 73, 113, .40) !important;
+}
+
+#tab-topics .topic-series-group {
+    background:
+        radial-gradient(120% 90% at 0% 0%, rgba(119, 180, 232, .07), transparent 48%),
+        rgba(10, 25, 42, .30) !important;
+}
+
+#tab-topics .topic-series-group > summary,
+#tab-topics .topic-single-group > header {
+    background: rgba(9, 21, 35, .25) !important;
+}
+
+#tab-topics .topic-series-items,
+#tab-topics .topic-single-group > div {
+    background: rgba(5, 14, 24, .22) !important;
+}
+
+#tab-topics .topic-compact-row {
+    background: rgba(20, 43, 67, .30) !important;
+}
+
+#tab-topics .topic-detail-backdrop,
+#tab-topics .topic-trash-backdrop,
+#tab-scripts .script-trash-backdrop {
+    background: rgba(1, 6, 14, .48) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+}
+
+#tab-topics .topic-detail-drawer,
+#tab-topics .topic-trash-drawer,
+#tab-scripts .script-trash-drawer {
+    border-color: var(--module-line) !important;
+    background: var(--module-glass-surface) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(155%) !important;
+    backdrop-filter: blur(30px) saturate(155%) !important;
+    box-shadow: -28px 0 80px rgba(0, 5, 14, .48), inset 1px 0 rgba(221,240,255,.08) !important;
+}
+
+#tab-topics .topic-detail-drawer > header,
+#tab-topics .topic-detail-actions,
+#tab-topics .topic-trash-drawer > header,
+#tab-scripts .script-trash-drawer > header {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(6, 16, 28, .34) !important;
+}
+
+#tab-topics .topic-detail-content,
+#tab-topics .topic-trash-list,
+#tab-scripts .script-trash-list {
+    background: transparent !important;
+}
+
+#tab-topics .topic-current-series,
+#tab-topics .topic-detail-tags span,
+#tab-topics .topic-trash-row,
+#tab-scripts .script-trash-row {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(18, 42, 67, .26) !important;
+}
+
+/* Script library / editor ---------------------------------------------- */
+
+#tab-scripts .scripts-layout {
+    gap: 12px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+#tab-scripts .scripts-sidebar,
+#tab-scripts .script-editor-area {
+    border-radius: 19px !important;
+}
+
+#tab-scripts .scripts-sidebar {
+    overflow: hidden;
+    background:
+        radial-gradient(120% 90% at 0% 0%, rgba(142, 190, 236, .10), transparent 48%),
+        linear-gradient(145deg, rgba(16, 34, 54, .46), rgba(5, 14, 24, .52)) !important;
+}
+
+#tab-scripts .script-library-header,
+#tab-scripts .script-list-heading,
+#tab-scripts .script-final-archive > summary {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(7, 17, 29, .24) !important;
+}
+
+#tab-scripts .scripts-sidebar .script-item {
+    margin-inline: 7px;
+    border-color: var(--module-line-soft) !important;
+    background: rgba(20, 43, 67, .28) !important;
+}
+
+#tab-scripts .scripts-sidebar .script-item:hover {
+    border-color: rgba(124, 195, 255, .46) !important;
+    background: rgba(37, 78, 120, .38) !important;
+}
+
+#tab-scripts .scripts-sidebar .script-item.active {
+    border-color: rgba(126, 201, 255, .62) !important;
+    background:
+        radial-gradient(110% 100% at 0% 0%, rgba(132, 201, 255, .17), transparent 56%),
+        rgba(42, 93, 149, .35) !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.12), 0 0 18px rgba(52,137,232,.12) !important;
+}
+
+#tab-scripts .script-item-title {
+    color: #e6f2ff !important;
+}
+
+#tab-scripts .script-item-meta,
+#tab-scripts .script-library-header p,
+#tab-scripts .script-list-heading {
+    color: #8da2b8 !important;
+}
+
+#tab-scripts .script-editor-area {
+    min-width: 0;
+    background:
+        radial-gradient(100% 90% at 0% 0%, rgba(137, 187, 236, .10), transparent 46%),
+        linear-gradient(145deg, rgba(14, 31, 51, .42), rgba(4, 12, 22, .50)) !important;
+}
+
+#tab-scripts .script-editor {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+#tab-scripts .editor-placeholder,
+#tab-scripts .script-editor-empty {
+    margin: 20px;
+    border: 1px dashed rgba(141, 192, 239, .25) !important;
+    border-radius: 15px;
+    background: rgba(8, 20, 34, .22) !important;
+    color: #9cb1c7 !important;
+}
+
+#tab-scripts .script-editor-toolbar,
+#tab-scripts .script-editor-header,
+#tab-scripts .editor-learning-section,
+#tab-scripts .script-assist-panel,
+#tab-scripts .script-assist-result,
+#tab-scripts .script-review-panel {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(8, 19, 32, .31) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+}
+
+#tab-scripts .editor-title,
+#tab-scripts .editor-content {
+    border-color: rgba(131, 179, 224, .27) !important;
+    background: rgba(4, 13, 23, .48) !important;
+    color: #e9f3ff !important;
+    -webkit-backdrop-filter: blur(17px) saturate(135%) !important;
+    backdrop-filter: blur(17px) saturate(135%) !important;
+}
+
+#tab-scripts .editor-title:focus,
+#tab-scripts .editor-content:focus {
+    border-color: rgba(126, 199, 255, .66) !important;
+    box-shadow: 0 0 0 3px rgba(80, 160, 240, .10), inset 0 1px rgba(255,255,255,.08) !important;
+}
+
+/* My library ------------------------------------------------------------ */
+
+#tab-archive .memory-hero {
+    border-radius: 22px !important;
+    background:
+        radial-gradient(100% 120% at 0% 0%, rgba(133, 193, 244, .16), transparent 45%),
+        linear-gradient(145deg, rgba(22, 42, 64, .48), rgba(5, 14, 24, .50)) !important;
+}
+
+#tab-archive .memory-stats,
+#tab-archive .memory-toolbar,
+#tab-archive .library-view-switch,
+#tab-archive .library-view-intro {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(7, 17, 29, .28) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+    backdrop-filter: blur(18px) saturate(140%) !important;
+}
+
+#tab-archive .library-view-switch button,
+#tab-archive .memory-search,
+#tab-archive .memory-toolbar select {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(14, 31, 50, .32) !important;
+    color: var(--module-text-soft) !important;
+}
+
+#tab-archive .library-view-switch button.active {
+    border-color: rgba(121, 197, 255, .46) !important;
+    background: rgba(45, 99, 157, .29) !important;
+}
+
+#tab-archive .memory-card {
+    min-height: 248px;
+    border-radius: 17px !important;
+    background:
+        radial-gradient(115% 100% at 0% 0%, rgba(120, 178, 228, .095), transparent 48%),
+        linear-gradient(145deg, rgba(20, 43, 67, .48), rgba(5, 15, 26, .52)) !important;
+}
+
+#tab-archive .memory-card:hover {
+    border-color: rgba(127, 199, 255, .48) !important;
+    transform: translateY(-2px);
+    box-shadow: inset 0 1px rgba(255,255,255,.1), 0 18px 38px rgba(0,7,18,.25) !important;
+}
+
+#tab-archive .memory-card h3,
+#tab-archive .memory-card > p {
+    color: #e6f1fc !important;
+}
+
+#tab-archive .memory-card > p,
+#tab-archive .memory-card footer time,
+#tab-archive .memory-card footer em {
+    color: #a6b8ca !important;
+}
+
+#tab-archive .memory-card-tags span,
+#tab-archive .memory-scope-pill,
+#tab-archive .memory-ai-pill,
+#tab-archive .memory-edit-button {
+    border-color: rgba(139, 185, 228, .22) !important;
+    background: rgba(10, 25, 41, .35) !important;
+}
+
+#tab-archive .memory-empty,
+#tab-archive .memory-modal,
+#tab-archive .memory-preview-modal,
+#tab-archive .memory-preview-result {
+    border-color: var(--module-line) !important;
+    background: var(--module-glass-surface) !important;
+    -webkit-backdrop-filter: blur(26px) saturate(148%) !important;
+    backdrop-filter: blur(26px) saturate(148%) !important;
+}
+
+#tab-archive .memory-modal,
+#tab-archive .memory-preview-modal {
+    color: var(--module-text-soft);
+}
+
+/* Journal and health --------------------------------------------------- */
+
+#tab-journal .journal-form,
+#tab-journal .journal-history-card,
+#tab-health .health-grid > .card {
+    border-radius: 19px !important;
+}
+
+#tab-journal .journal-row + .journal-row {
+    border-top: 1px solid rgba(139, 184, 228, .11);
+    padding-top: 15px;
+}
+
+#tab-journal .mood-selector {
+    padding: 8px;
+    border: 1px solid var(--module-line-soft);
+    border-radius: 15px;
+    background: rgba(7, 18, 31, .22);
+}
+
+#tab-journal .mood-btn {
+    border-color: rgba(139, 185, 229, .25) !important;
+    background: rgba(18, 40, 63, .34) !important;
+    color: #b7cce1 !important;
+}
+
+#tab-journal .mood-btn:hover,
+#tab-journal .mood-btn.active {
+    border-color: rgba(126, 198, 255, .62) !important;
+    background: rgba(49, 107, 169, .34) !important;
+    box-shadow: 0 0 17px rgba(67, 150, 237, .14);
+}
+
+#tab-journal .journal-entry {
+    margin: 7px 0;
+    padding: 14px 16px;
+    border: 1px solid var(--module-line-soft) !important;
+    border-radius: 13px;
+    background: rgba(18, 40, 63, .28) !important;
+}
+
+#tab-journal .journal-entry:last-child {
+    border-bottom: 1px solid var(--module-line-soft) !important;
+}
+
+#tab-journal .journal-entry:hover,
+#tab-health .reward-item:hover {
+    border-color: rgba(124, 196, 255, .38) !important;
+    background: rgba(34, 73, 113, .35) !important;
+}
+
+#tab-health .reward-rules {
+    gap: 8px;
+}
+
+#tab-health .reward-item {
+    min-height: 46px;
+    padding: 9px 11px;
+    border: 1px solid var(--module-line-soft) !important;
+    border-radius: 13px;
+    background: rgba(18, 40, 63, .28) !important;
+}
+
+#tab-health .reward-item > span:last-child {
+    color: #c1d0df !important;
+}
+
+#tab-health .week-stats {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(8, 19, 32, .22);
+    border-radius: 10px;
+    padding: 12px 13px;
+}
+
+/* Settings and the common assistant ----------------------------------- */
+
+#settingsModal .settings-title,
+#settingsModal .settings-nav,
+#settingsModal .settings-footer,
+#settingsModal .settings-panel,
+#settingsModal .account-config-card,
+#settingsModal .knowledge-link-settings,
+#settingsModal .config-state,
+#settingsModal .path-box,
+#settingsModal .source-checks label {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(7, 18, 31, .28) !important;
+}
+
+#settingsModal .settings-nav {
+    background: rgba(6, 15, 26, .34) !important;
+}
+
+#settingsModal .settings-tab {
+    border: 1px solid transparent !important;
+    color: var(--module-text-muted) !important;
+}
+
+#settingsModal .settings-tab:hover,
+#settingsModal .settings-tab.active {
+    border-color: rgba(126, 198, 255, .42) !important;
+    background: rgba(44, 94, 149, .29) !important;
+    color: #e3f3ff !important;
+}
+
+.assistant-drawer {
+    border-color: var(--module-line-bright) !important;
+    background:
+        radial-gradient(120% 90% at 0% 0%, rgba(145, 193, 240, .13), transparent 46%),
+        linear-gradient(145deg, rgba(17, 37, 59, .63), rgba(4, 12, 22, .70)) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(160%) brightness(1.05) !important;
+    backdrop-filter: blur(30px) saturate(160%) brightness(1.05) !important;
+}
+
+.assistant-chat-header,
+.assistant-knowledge-strip,
+.assistant-prompts,
+.assistant-chat-composer,
+.assistant-voice-settings,
+.assistant-voice-note {
+    border-color: var(--module-line-soft) !important;
+    background: rgba(7, 18, 31, .31) !important;
+}
+
+.assistant-message-bubble,
+.assistant-prompts button {
+    border-color: rgba(135, 183, 229, .23) !important;
+    background: rgba(20, 44, 69, .34) !important;
+}
+
+.assistant-message-bubble:hover,
+.assistant-prompts button:hover {
+    border-color: rgba(127, 199, 255, .47) !important;
+    background: rgba(36, 78, 121, .42) !important;
+}
+
+/* Controls keep enough contrast while remaining part of the glass stack. */
+#tab-hotspots input,
+#tab-hotspots select,
+#tab-hotspots textarea,
+#tab-inspirations input,
+#tab-inspirations select,
+#tab-inspirations textarea,
+#tab-topics input,
+#tab-topics select,
+#tab-topics textarea,
+#tab-scripts input,
+#tab-scripts select,
+#tab-scripts textarea,
+#tab-archive input,
+#tab-archive select,
+#tab-archive textarea,
+#tab-journal input,
+#tab-journal select,
+#tab-journal textarea,
+#tab-health input,
+#tab-health select,
+#tab-health textarea,
+#settingsModal input,
+#settingsModal select,
+#settingsModal textarea {
+    border-color: rgba(133, 181, 229, .30) !important;
+    background: rgba(3, 12, 22, .50) !important;
+    color: #e5f1fd !important;
+}
+
+#tab-hotspots input:focus,
+#tab-hotspots select:focus,
+#tab-hotspots textarea:focus,
+#tab-inspirations input:focus,
+#tab-inspirations select:focus,
+#tab-inspirations textarea:focus,
+#tab-topics input:focus,
+#tab-topics select:focus,
+#tab-topics textarea:focus,
+#tab-scripts input:focus,
+#tab-scripts select:focus,
+#tab-scripts textarea:focus,
+#tab-archive input:focus,
+#tab-archive select:focus,
+#tab-archive textarea:focus,
+#tab-journal input:focus,
+#tab-journal select:focus,
+#tab-journal textarea:focus,
+#tab-health input:focus,
+#tab-health select:focus,
+#tab-health textarea:focus,
+#settingsModal input:focus,
+#settingsModal select:focus,
+#settingsModal textarea:focus {
+    border-color: rgba(128, 200, 255, .70) !important;
+    box-shadow: 0 0 0 3px rgba(72, 153, 235, .11), inset 0 1px rgba(255,255,255,.08) !important;
+}
+
+/* Empty/loading states should read as intentional glass placeholders. */
+#tab-hotspots .empty-hint,
+#tab-inspirations .empty-hint,
+#tab-topics .topic-library-empty,
+#tab-scripts .script-list-empty,
+#tab-archive .memory-empty,
+#tab-scripts .editor-placeholder,
+#tab-scripts .script-editor-empty {
+    border-color: rgba(139, 190, 237, .25) !important;
+    background: rgba(8, 20, 34, .20) !important;
+    color: #91a7bd !important;
+}
+
+@media (max-width: 900px) {
+    #tab-hotspots .hotspot-view-tabs {
+        position: static;
+    }
+
+    #tab-archive .memory-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    #tab-archive .memory-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #tab-hotspots .today-event-card {
+        min-height: 0;
+    }
+
+    #tab-inspirations .idea-panel-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* Closed side drawers are positioned off-canvas by the legacy transition.
+ * On narrow viewports that transformed box can still enlarge scrollWidth.
+ * Remove it from layout while closed, then give the open state a true
+ * viewport-bound width so the glass drawer never creates horizontal scroll. */
+@media (max-width: 640px) {
+    #tab-topics .topic-trash-backdrop:not(.open) .topic-trash-drawer,
+    #tab-topics .topic-detail-backdrop:not(.open) .topic-detail-drawer,
+    #tab-scripts .script-trash-backdrop:not(.open) .script-trash-drawer {
+        display: none;
+    }
+
+    #tab-topics .topic-trash-backdrop,
+    #tab-topics .topic-detail-backdrop,
+    #tab-scripts .script-trash-backdrop {
+        overflow: hidden;
+    }
+
+    #tab-topics .topic-trash-backdrop.open .topic-trash-drawer,
+    #tab-topics .topic-detail-backdrop.open .topic-detail-drawer,
+    #tab-scripts .script-trash-backdrop.open .script-trash-drawer {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    #tab-hotspots .today-overview > div,
+    #tab-hotspots .today-event-card,
+    #tab-inspirations .idea-unified-panel,
+    #tab-topics .topic-featured-section,
+    #tab-topics .topic-directory-panel,
+    #tab-scripts .scripts-sidebar,
+    #tab-scripts .script-editor-area,
+    #tab-archive .memory-hero,
+    #tab-archive .memory-card,
+    #tab-journal .journal-form,
+    #tab-journal .journal-history-card,
+    #tab-health .health-grid > .card,
+    #settingsModal .settings-modal,
+    .assistant-drawer {
+        background: #102137 !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+}

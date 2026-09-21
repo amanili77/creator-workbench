@@ -1,0 +1,53 @@
+# 本地用户数据：数据库、个人资料、密钥、Cookie、浏览器登录态和备份
+用户数据/
+data/
+browser_profile/
+douyin_cookies.json
+douyin_user_cache.json
+secrets.dat
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# 本地配置与密钥
+.env
+.env.*
+!.env.example
+
+# 本地运行环境与状态
+runtime/
+.venv/
+venv/
+.review_server_pid
+当前服务进程.txt
+当前端口.txt
+logs/
+*.log
+temp_port.txt
+nul
+
+# Python 缓存与测试产物
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 生成物与临时文件
+output/
+slides_img/
+gen_excalidraw.py
+gen_slides.py
+*.pptx
+*.excalidraw
+*.zip
+*.dmp
+*.tmp
+*.bak
+
+# 编辑器与系统文件
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,396 @@
+/*
+ * Calendar refinement: compact month cells, readable plan chips and a
+ * viewport-safe "sticker" detail card.  The monthly grid stays familiar,
+ * while empty time is represented by negative space instead of helper copy.
+ */
+
+#tab-weekly {
+    --calendar-ink: #e8f3ff;
+    --calendar-muted-ink: rgba(174, 199, 224, .68);
+    --calendar-glass: rgba(9, 20, 34, .44);
+    --calendar-glass-soft: rgba(11, 25, 42, .26);
+    --calendar-line: rgba(143, 190, 236, .18);
+    --calendar-line-bright: rgba(111, 194, 255, .62);
+    --calendar-accent: #72c7ff;
+}
+
+#tab-weekly .calendar-toolbar {
+    margin-bottom: 14px;
+}
+
+#tab-weekly .calendar-toolbar-note {
+    margin-top: 6px;
+    color: rgba(183, 207, 232, .62);
+    font-size: 12px;
+}
+
+#tab-weekly .calendar-scroll {
+    overflow: auto;
+    border-color: rgba(157, 203, 247, .24);
+    background: rgba(4, 12, 22, .38);
+}
+
+#tab-weekly .calendar-weekdays {
+    background: rgba(14, 29, 47, .66);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+    backdrop-filter: blur(18px) saturate(145%);
+}
+
+#tab-weekly .calendar-weekdays span {
+    padding: 10px 13px 9px;
+    color: rgba(193, 216, 239, .78);
+    font-size: 14px;
+}
+
+#tab-weekly .monthly-calendar {
+    grid-auto-rows: minmax(68px, auto);
+}
+
+#tab-weekly .calendar-day {
+    min-height: 68px;
+    height: auto;
+    padding: 8px 10px 7px;
+    border-right-color: rgba(126, 173, 219, .14);
+    border-bottom-color: rgba(126, 173, 219, .14);
+    background: var(--calendar-glass) !important;
+    transition: background .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+#tab-weekly .calendar-day:not(.has-plans) {
+    min-height: 68px;
+    background: rgba(7, 17, 29, .28) !important;
+}
+
+#tab-weekly .calendar-day.has-plans {
+    min-height: 112px;
+    background:
+        radial-gradient(120% 90% at 0% 0%, rgba(99, 178, 248, .12), transparent 52%),
+        rgba(12, 29, 48, .48) !important;
+    box-shadow: inset 0 2px 0 rgba(108, 196, 255, .72);
+}
+
+#tab-weekly .calendar-day.has-plans::after {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--calendar-accent);
+    box-shadow: 0 0 0 3px rgba(114, 199, 255, .1), 0 0 12px rgba(114, 199, 255, .55);
+    content: "";
+    pointer-events: none;
+}
+
+#tab-weekly .calendar-day.has-unscheduled::after {
+    background: #f0c978;
+    box-shadow: 0 0 0 3px rgba(240, 201, 120, .1), 0 0 12px rgba(240, 201, 120, .42);
+}
+
+#tab-weekly .calendar-day.day-holiday.has-plans::after { background: #ef9bb4; }
+#tab-weekly .calendar-day.day-makeup-workday.has-plans::after { background: #f0c978; }
+
+#tab-weekly .calendar-day:hover,
+#tab-weekly .calendar-day:focus-within {
+    z-index: 3;
+    border-color: rgba(119, 201, 255, .48);
+    background: rgba(18, 39, 63, .62) !important;
+    box-shadow: inset 0 0 0 1px rgba(118, 200, 255, .24), 0 10px 28px rgba(0, 8, 18, .18);
+}
+
+#tab-weekly .calendar-day.is-today {
+    box-shadow: inset 0 3px 0 #73c8ff, inset 0 0 26px rgba(64, 166, 244, .12);
+}
+
+#tab-weekly .calendar-day.is-outside {
+    opacity: .68;
+}
+
+#tab-weekly .calendar-day-header {
+    min-height: 29px;
+    margin-bottom: 4px;
+}
+
+#tab-weekly .calendar-date-button {
+    height: 30px;
+    padding: 0 5px;
+    color: var(--calendar-ink);
+    font-size: 17px;
+    font-weight: 760;
+}
+
+#tab-weekly .calendar-date-button:hover {
+    background: rgba(118, 200, 255, .1);
+    color: #fff;
+}
+
+#tab-weekly .calendar-date-button small {
+    font-size: 11px;
+}
+
+#tab-weekly .calendar-day-meta {
+    gap: 6px;
+}
+
+#tab-weekly .calendar-day-kind {
+    max-width: 58px;
+    color: rgba(180, 205, 230, .72);
+    font-size: 11px;
+}
+
+#tab-weekly .calendar-day-plan-count {
+    display: inline-flex;
+    align-items: center;
+    min-height: 19px;
+    padding: 0 6px;
+    border: 1px solid rgba(116, 199, 255, .24);
+    border-radius: 999px;
+    background: rgba(86, 174, 239, .1);
+    color: #9ed8ff;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+#tab-weekly .calendar-day.day-holiday .calendar-day-kind { color: #efa7bd; }
+#tab-weekly .calendar-day.day-makeup-workday .calendar-day-kind { color: #f0ce87; }
+#tab-weekly .calendar-day.day-rest-day .calendar-day-kind { color: #a8b6c8; }
+
+#tab-weekly .calendar-add-button {
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+}
+
+#tab-weekly .calendar-day-tasks {
+    max-height: 82px;
+    gap: 4px;
+    overflow: hidden;
+}
+
+#tab-weekly .calendar-day:not(.has-plans) .calendar-day-tasks {
+    min-height: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+#tab-weekly .calendar-day-empty {
+    display: none;
+}
+
+#tab-weekly .calendar-task {
+    grid-template-columns: 54px 21px minmax(0, 1fr) 18px;
+    min-height: 31px;
+    gap: 6px;
+    padding: 6px 7px;
+    border-color: rgba(143, 190, 236, .24);
+    border-left-width: 3px;
+    border-radius: 8px;
+    background: rgba(18, 39, 62, .54);
+}
+
+#tab-weekly .calendar-task.status-doing {
+    border-left-color: #73c8ff;
+    background: rgba(36, 80, 116, .56);
+}
+
+#tab-weekly .calendar-task.status-done {
+    border-left-color: #5ac2a5;
+    background: rgba(23, 65, 66, .42);
+}
+
+#tab-weekly .calendar-task[data-unscheduled="true"] .calendar-task-time {
+    color: #f0cf8b;
+}
+
+#tab-weekly .calendar-task-time {
+    align-self: center;
+    color: #a7d7f7;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+#tab-weekly .calendar-task strong {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+#tab-weekly .calendar-task p {
+    display: none;
+}
+
+#tab-weekly .calendar-task-delete {
+    display: none;
+}
+
+#tab-weekly .calendar-task-check {
+    width: 21px;
+    height: 21px;
+    border-radius: 7px;
+}
+
+#tab-weekly .calendar-more {
+    margin-top: 1px;
+    padding: 4px 7px;
+    border-color: rgba(119, 201, 255, .3);
+    background: rgba(91, 174, 234, .08);
+    color: #a7d8fb;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+#tab-weekly .calendar-gap-summary {
+    display: none;
+}
+
+/* The detail card is moved to <body> by app.js so fixed coordinates are truly
+   viewport coordinates, even while the tab fade animation is active. */
+body > .calendar-hover-card {
+    position: fixed !important;
+    z-index: 2200 !important;
+    box-sizing: border-box;
+    width: min(390px, calc(100vw - 28px));
+    max-height: min(620px, calc(100dvh - 28px));
+    overflow: hidden;
+    padding: 18px;
+    border: 1px solid rgba(164, 214, 255, .62);
+    border-radius: 18px 18px 20px 20px;
+    background:
+        radial-gradient(120% 100% at 0% 0%, rgba(152, 209, 255, .16), transparent 48%),
+        linear-gradient(145deg, rgba(24, 48, 76, .96), rgba(7, 16, 29, .98));
+    -webkit-backdrop-filter: blur(28px) saturate(155%);
+    backdrop-filter: blur(28px) saturate(155%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .2),
+        inset 0 -1px rgba(0, 0, 0, .48),
+        0 24px 70px rgba(0, 4, 14, .62),
+        0 0 0 1px rgba(100, 180, 255, .08);
+}
+
+body > .calendar-hover-card::before {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    width: 8px;
+    height: 8px;
+    border: 1px solid rgba(218, 239, 255, .72);
+    border-radius: 50%;
+    background: #72c7ff;
+    box-shadow: 0 0 0 4px rgba(114, 199, 255, .12), 0 0 14px rgba(114, 199, 255, .55);
+    content: "";
+}
+
+body > .calendar-hover-card .calendar-hover-head {
+    padding-right: 12px;
+}
+
+body > .calendar-hover-card .calendar-hover-head strong {
+    color: #f3f8ff;
+    font-size: 18px;
+    letter-spacing: -.02em;
+}
+
+body > .calendar-hover-card .calendar-hover-kind {
+    padding: 4px 7px;
+    font-size: 11px;
+}
+
+body > .calendar-hover-card .calendar-hover-subtitle {
+    margin: 8px 0 12px;
+    color: rgba(196, 220, 242, .72);
+    font-size: 13px;
+}
+
+body > .calendar-hover-card .calendar-hover-timeline {
+    max-height: min(410px, calc(100dvh - 220px));
+    gap: 7px;
+    padding-right: 4px;
+}
+
+body > .calendar-hover-card .calendar-task {
+    grid-template-columns: 76px 24px minmax(0, 1fr) 22px;
+    min-height: 50px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .075);
+}
+
+body > .calendar-hover-card .calendar-task-time {
+    font-size: 12px;
+}
+
+body > .calendar-hover-card .calendar-task strong {
+    overflow: visible;
+    font-size: 15px;
+    line-height: 1.35;
+    white-space: normal;
+}
+
+body > .calendar-hover-card .calendar-task p {
+    display: -webkit-box;
+    margin-top: 4px;
+    color: rgba(190, 215, 237, .7);
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-line-clamp: 3;
+}
+
+body > .calendar-hover-card .calendar-task-delete {
+    display: grid;
+    opacity: 1;
+}
+
+body > .calendar-hover-card .calendar-hover-empty {
+    padding: 18px 12px;
+    border: 1px dashed rgba(158, 206, 246, .28);
+    border-radius: 10px;
+    color: rgba(200, 222, 242, .72);
+    font-size: 13px;
+}
+
+body > .calendar-hover-card .calendar-hover-note {
+    margin-top: 10px;
+    color: rgba(176, 202, 227, .58);
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+body > .calendar-hover-card .calendar-hover-add {
+    min-height: 38px;
+    margin-top: 13px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    color: #b7e1ff;
+    font-size: 13px;
+}
+
+@media (max-width: 760px) {
+    #tab-weekly .monthly-calendar,
+    #tab-weekly .calendar-weekdays {
+        min-width: 780px;
+    }
+
+    #tab-weekly .calendar-day {
+        min-height: 68px;
+    }
+
+    #tab-weekly .calendar-task {
+        grid-template-columns: 48px 20px minmax(0, 1fr);
+    }
+
+    #tab-weekly .calendar-task-delete {
+        display: none;
+    }
+
+    body > .calendar-hover-card {
+        width: min(360px, calc(100vw - 20px));
+        padding: 15px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #tab-weekly .calendar-day,
+    #tab-weekly .calendar-task {
+        transition: none;
+    }
+}

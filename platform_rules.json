@@ -1,0 +1,181 @@
+{
+  "version": "2026-09-13.3",
+  "reviewed_at": "2026-09-13",
+  "score_model": {
+    "meaning": "安全度分数，越低表示风险越高；它不是平台通过率。",
+    "caps": {
+      "hard_block": 39,
+      "high": 59,
+      "medium": 79
+    }
+  },
+  "platforms": {
+    "xhs": {
+      "label": "小红书",
+      "short_label": "小红书",
+      "sources": [
+        {
+          "id": "xhs-topic-rules",
+          "title": "小红书「现场」主题规范",
+          "url": "https://top.xiaohongshu.com/fe/toph5/rules/subject",
+          "official": true,
+          "checked_at": "2026-09-13",
+          "scope": "社区主题内容"
+        },
+        {
+          "id": "xhs-content-review",
+          "title": "小红书聚光内容审核规范",
+          "url": "https://ad.xiaohongshu.com/next_help/docs/8dc5bd9c45c9a90cb9912f3400d43f92",
+          "official": true,
+          "checked_at": "2026-09-13",
+          "scope": "商业内容与推广物料"
+        },
+        {
+          "id": "xhs-developer-ip",
+          "title": "小红书小程序开放平台第三方平台开发者服务协议",
+          "url": "https://miniapp.xiaohongshu.com/doc/DC430242",
+          "official": true,
+          "checked_at": "2026-09-13",
+          "scope": "第三方信息与知识产权"
+        }
+      ],
+      "rules": [
+        {
+          "id": "xhs-truth-01",
+          "category": "事实与证据",
+          "title": "真实、准确、有边界",
+          "summary": "避免虚假、夸张、与实际内容不符，以及无法证实的绝对化能力描述。",
+          "source_ids": ["xhs-topic-rules", "xhs-content-review"]
+        },
+        {
+          "id": "xhs-diversion-01",
+          "category": "导流与联系方式",
+          "title": "外部平台与导流",
+          "summary": "避免为账号主页或站外服务导流，也不要过度讨论相似平台。",
+          "source_ids": ["xhs-topic-rules", "xhs-content-review"]
+        },
+        {
+          "id": "xhs-ip-01",
+          "category": "版权与搬运",
+          "title": "第三方内容授权",
+          "summary": "发布或处理的第三方文章、视频和数据应有合法来源与授权，禁止恶意复制。",
+          "source_ids": ["xhs-topic-rules", "xhs-developer-ip"]
+        }
+      ]
+    },
+    "douyin": {
+      "label": "抖音",
+      "short_label": "抖音",
+      "sources": [
+        {
+          "id": "douyin-user-agreement",
+          "title": "抖音用户服务协议",
+          "url": "https://www.douyin.com/draft/douyin_agreement/douyin_agreement_user.html?id=6773906068725565448",
+          "official": true,
+          "checked_at": "2026-09-13",
+          "scope": "内容发布、网络安全与知识产权"
+        },
+        {
+          "id": "douyin-community-convention",
+          "title": "抖音社区自律公约",
+          "url": "https://aweme.snssdk.com/magic/page/ejs/5ca204b709a5900217b1f018?appType=douyin",
+          "official": true,
+          "checked_at": "2026-09-13",
+          "scope": "社区内容"
+        },
+        {
+          "id": "douyin-open-agreement",
+          "title": "抖音开放平台开发者服务协议",
+          "url": "https://open.douyin.com/platform/resource/docs/operation-standard/agreement-protocol",
+          "official": true,
+          "checked_at": "2026-09-13",
+          "scope": "第三方工具、数据与授权"
+        }
+      ],
+      "rules": [
+        {
+          "id": "douyin-truth-01",
+          "category": "事实与证据",
+          "title": "虚假、夸张与过度营销",
+          "summary": "不得传播虚假信息、使用与内容严重不符的夸张标题或发布过度营销信息。",
+          "source_ids": ["douyin-user-agreement", "douyin-community-convention"]
+        },
+        {
+          "id": "douyin-security-01",
+          "category": "平台与安全",
+          "title": "插件、账号与数据安全",
+          "summary": "第三方工具、自动化处理、账号凭据和平台数据必须在明确授权范围内使用。",
+          "source_ids": ["douyin-user-agreement", "douyin-open-agreement"]
+        },
+        {
+          "id": "douyin-ip-01",
+          "category": "版权与搬运",
+          "title": "原创或合法授权",
+          "summary": "发布内容及其中的文字、画面和声音应为原创或已获合法授权。",
+          "source_ids": ["douyin-user-agreement"]
+        }
+      ]
+    },
+    "wechat": {
+      "label": "微信视频号",
+      "short_label": "视频号",
+      "sources": [
+        {
+          "id": "wechat-license",
+          "title": "腾讯微信软件许可及服务协议",
+          "url": "https://weixin.qq.com/cgi-bin/readtemplate?head=true&lang=zh_CN&s=default&t=weixin_agreement",
+          "official": true,
+          "checked_at": "2026-09-13",
+          "scope": "微信软件、账号、第三方工具与内容"
+        },
+        {
+          "id": "tencent-ip-policy",
+          "title": "腾讯知识产权平台：协议与规则",
+          "url": "https://ipr.tencent.com/policy/content/1",
+          "official": true,
+          "checked_at": "2026-09-13",
+          "scope": "内容合法来源、授权与侵权处理"
+        },
+        {
+          "id": "tencent-content-safety",
+          "title": "腾讯内容安全与知识产权治理说明",
+          "url": "https://static.www.tencent.com/uploads/2026/04/09/f6dbd30b3d8ca9c65f76f3d73b7da739.pdf",
+          "official": true,
+          "checked_at": "2026-09-13",
+          "scope": "视频号内容安全与原创保护"
+        }
+      ],
+      "rules": [
+        {
+          "id": "wechat-source-01",
+          "category": "版权与搬运",
+          "title": "合法来源与必要授权",
+          "summary": "发送或传播的网页、文字、图片、音视频应为本人所有或已取得必要授权。",
+          "source_ids": ["tencent-ip-policy", "tencent-content-safety"]
+        },
+        {
+          "id": "wechat-security-01",
+          "category": "平台与安全",
+          "title": "第三方工具与账号安全",
+          "summary": "涉及第三方插件、扫码登录、账号读取或绕过安全保护的教程需要先核对官方授权、权限和隐私边界。",
+          "source_ids": ["wechat-license"]
+        },
+        {
+          "id": "wechat-truth-01",
+          "category": "事实与证据",
+          "title": "信息真实与可核验",
+          "summary": "产品能力、版本和时效性结论应提供来源与适用条件，避免误导。",
+          "source_ids": ["wechat-license"]
+        }
+      ]
+    }
+  },
+  "finished_video_checks": [
+    "画面是否出现可扫码二维码、网址、手机号、微信号或站外跳转提示",
+    "画面是否完整展示第三方文章、视频、书评、用户昵称、头像或个人笔记",
+    "画面是否展示扫码登录、账号授权、浏览器扩展权限或关闭安全保护的步骤",
+    "封面、字幕、贴纸、评论截图和口播是否含脚本文字之外的绝对化或误导性表达",
+    "成片是否带其他平台水印、下载标识、未获授权的音乐、图片、字体或品牌素材",
+    "产品名称、版本、发布日期和功能演示是否与发布当天的官方信息一致"
+  ]
+}

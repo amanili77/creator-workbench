@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050910">
+    <title>{{ app_name }}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%231a1713%22/><text x=%2232%22 y=%2243%22 text-anchor=%22middle%22 font-size=%2234%22 fill=%22%23e0ad5d%22>{{ app_mark }}</text></svg>">
+    <link rel="stylesheet" href="/static/style.css?v=84">
+    <link rel="stylesheet" href="/static/assistant.css?v=3">
+    <link rel="stylesheet" href="/static/simplified.css?v=1">
+    <link rel="stylesheet" href="/static/dark-theme.css?v=10">
+    <link rel="stylesheet" href="/static/home-globe.css?v=1">
+    <link rel="stylesheet" href="/static/calendar.css?v=2">
+    <link rel="stylesheet" href="/static/midnight-theme.css?v=1">
+    <link rel="stylesheet" href="/static/glass-theme.css?v=6">
+    <link rel="stylesheet" href="/static/calendar-enhancements.css?v=1">
+    <link rel="stylesheet" href="/static/calendar-refinement.css?v=4">
+    <link rel="stylesheet" href="/static/module-glass.css?v=3">
+</head>
+<body>
+<div id="app">
+    <!-- 侧边导航 -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">
+            <span class="sidebar-logo-mark" id="sidebarAppMark">{{ app_mark }}</span>
+            <span class="sidebar-logo-copy">
+                <strong id="sidebarAppName">{{ app_name }}</strong>
+                <small>CREATOR OS</small>
+            </span>
+        </div>
+        <div class="sidebar-streak" id="sidebarStreak">
+            <span class="streak-num" id="streakNum">0</span>
+            <span class="streak-label">天连击</span>
+        </div>
+        <div class="nav-items">
+            <button class="nav-item active" data-tab="dashboard" onclick="switchTab('dashboard')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                <span>总览</span>
+            </button>
+            <button class="nav-item" data-tab="weekly" onclick="switchTab('weekly')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h2M14 14h2M8 18h2M14 18h2"/></svg>
+                <span>工作计划</span>
+            </button>
+            <div class="nav-group-label">创作</div>
+            <button class="nav-item" data-tab="hotspots" onclick="switchTab('hotspots')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+                <span>信源</span>
+            </button>
+            <button class="nav-item" data-tab="inspirations" onclick="switchTab('inspirations')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <span>灵感</span>
+            </button>
+            <button class="nav-item" data-tab="topics" onclick="switchTab('topics')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3v1h6v-1c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>
+                <span>选题库</span>
+            </button>
+            <button class="nav-item" data-tab="scripts" onclick="switchTab('scripts')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+                <span>脚本库</span>
+            </button>
+            <div class="nav-group-label">关于我</div>
+            <button class="nav-item" data-tab="archive" onclick="switchTab('archive')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="9" r="2.5"/><path d="M7.5 17c.8-2.2 2.3-3.4 4.5-3.4s3.7 1.2 4.5 3.4"/></svg>
+                <span>我的</span>
+            </button>
+            <button class="nav-item" data-tab="journal" onclick="switchTab('journal')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>
+                <span>日记</span>
+            </button>
+            <button class="nav-item" data-tab="health" onclick="switchTab('health')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <span>身心</span>
+            </button>
+        </div>
+        <div class="sidebar-footer">
+            <button class="btn-checkin btn-in" id="btnCheckIn" onclick="doCheckIn()">上班打卡</button>
+            <button class="btn-checkin btn-out" id="btnCheckOut" onclick="doCheckOut()">下班打卡</button>
+            <button class="btn-settings" onclick="showSettings()" title="设置">⚙️ 设置</button>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <!-- 顶栏 -->
+        <header class="topbar">
+            <div class="topbar-copy">
+                <span class="topbar-kicker">CREATOR WORKSPACE</span>
+                <h1 id="pageTitle">总览</h1>
+            </div>
+            <div class="topbar-actions">
+                <a class="topbar-space-btn" href="/space/" title="进入写实书桌空间模式">
+                    <span class="topbar-space-orbit" aria-hidden="true"></span>
+                    空间模式
+                </a>
+                <button class="topbar-memory-btn" onclick="openMemoryForm('', 'memo')"><span>+</span> 随手记</button>
+                <span class="today-date" id="todayDate"></span>
+            </div>
+        </header>
+
+        <!-- 总览面板 -->
+        <section id="tab-dashboard" class="tab-content active">
+            <section class="editorial-hero globe-hero" id="assistantOverview" aria-labelledby="dashboardGreeting">
+                <div class="editorial-hero-copy globe-hero-copy">
+                    <span class="assistant-overline"><i></i> {{ assistant_name }} 已连接</span>
+                    <h2 id="dashboardGreeting">晚上好，新用户</h2>
+                    <p id="assistantFocus">正在整理今天最值得关注的一件事…</p>
+                    <div class="editorial-hero-actions">
+                        <button class="assistant-overview-btn primary" onclick="openAssistantChat()">开始对话</button>
+                        <button class="assistant-overview-btn" onclick="playAssistantBriefing()">播放简报</button>
+                        <button class="assistant-overview-btn" onclick="regenerateAssistantBriefing(this)">重新整理</button>
+                    </div>
+                    <div class="editorial-meta">
+                        <span><b id="assistantNewsCount">0</b> 条重点</span>
+                        <span><b id="assistantIdeaCount">0</b> 条新灵感</span>
+                        <span id="dashboardCheckinSummary">今天还未打卡</span>
+                    </div>
+                    <small id="assistantLastUpdate">正在读取本地数据…</small>
+                </div>
+                <div class="globe-stage">
+                    <div class="globe-visual" id="globeVisual" data-state="loading">
+                        <canvas id="homeGlobeCanvas" role="img" aria-label="可拖动旋转的三维地球"></canvas>
+                        <div class="globe-loader" aria-hidden="true"><span></span></div>
+                        <div class="globe-fallback">地球视图暂时不可用</div>
+                    </div>
+                    <div class="globe-controls">
+                        <span>拖动地球改变视角</span>
+                        <button id="globeMotionToggle" type="button" aria-pressed="false">暂停自转</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="editorial-dashboard">
+                <article class="editorial-card dashboard-check-wall-card">
+                    <header><div><h3>今日打卡</h3></div><em id="dashboardCheckProgress">0 / 5</em></header>
+                    <div id="dashboardCheckWall" class="dashboard-check-wall"><div class="editorial-empty">正在读取今天的完成情况…</div></div>
+                </article>
+                <article class="editorial-card dashboard-recall-card">
+                    <header><div><h3>点子回想</h3></div><button onclick="loadDashboardCreatorCards()">换一批</button></header>
+                    <div id="dashboardRecallIdeas" class="dashboard-recall-ideas"><div class="editorial-empty">正在随机挑选点子…</div></div>
+                </article>
+                <article class="editorial-card dashboard-hot-pair-card">
+                    <header><div><h3>今日两条</h3></div><button onclick="switchTab('hotspots')">查看信源</button></header>
+                    <div id="dashboardDualHotspots" class="dashboard-dual-hotspots"><div class="editorial-empty">正在挑选热点…</div></div>
+                </article>
+            </section>
+        </section>
+
+        <!-- 我的资料库 -->
+        <section id="tab-archive" class="tab-content">
+            <section class="memory-hero">
+                <div class="memory-hero-copy">
+                    <span class="memory-eyebrow">MY LIBRARY</span>
+                    <h2>关于你，也记住你常用的东西</h2>
+                    <div class="memory-hero-actions">
+                        <button class="btn-primary" onclick="openMemoryForm()">+ 新建</button>
+                        <button class="btn-ghost" onclick="previewMemoryContext()">看看 AI 会读取什么</button>
+                    </div>
+                </div>
+                <div class="memory-stats">
+                    <div><strong id="memoryStatAbout">0</strong><span>关于我</span></div>
+                    <div><strong id="memoryStatMemo">0</strong><span>备忘录</span></div>
+                    <div><strong id="memoryStatPrivate">0</strong><span>私密备忘</span></div>
+                </div>
+            </section>
+
+            <div class="library-view-switch" role="tablist" aria-label="资料库内容">
+                <button class="active" data-library-view="about" onclick="setLibraryView('about')"><strong>关于我</strong><span>背景、喜好、偏好与目标</span></button>
+                <button data-library-view="memo" onclick="setLibraryView('memo')"><strong>备忘录</strong><span>常用内容、提示词与私密记录</span></button>
+            </div>
+
+            <div class="memory-toolbar">
+                <label class="memory-search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="memorySearch" type="search" placeholder="搜索标题、内容或标签" oninput="setMemorySearch(this.value)"></label>
+                <select id="memoryScopeFilter" onchange="setMemoryScope(this.value)">
+                    <option value="all">全部适用范围</option>
+                    <option value="main">仅大号</option>
+                    <option value="vlog">仅小号 Vlog</option>
+                </select>
+            </div>
+            <div id="memoryGrid" class="memory-grid"><div class="memory-empty">正在读取资料库…</div></div>
+        </section>
+
+        <!-- 信源 -->
+        <section id="tab-hotspots" class="tab-content">
+            <div class="section-header source-page-header">
+                <div class="hotspots-actions">
+                    <button class="btn-ghost" id="btnHotspotRefresh" onclick="refreshHotspots()">↻ 刷新信源</button>
+                </div>
+                <span class="update-time" id="hotspotTime"></span>
+            </div>
+            <div class="today-overview" id="todayOverview"></div>
+            <div class="hotspot-view-tabs" role="tablist" aria-label="信源视图">
+                <button class="view-tab active" data-hotspot-view="happening" onclick="setHotspotView('happening')">正在发生</button>
+                <button class="view-tab" data-hotspot-view="deep_dive" onclick="setHotspotView('deep_dive')">深度解读</button>
+                <button class="view-tab" data-hotspot-view="opportunities" onclick="setHotspotView('opportunities')">值得一做</button>
+                <button class="view-tab" data-hotspot-view="sources" onclick="setHotspotView('sources')">消息来源</button>
+                <span id="hotspotRefreshStatus" class="settings-status"></span>
+            </div>
+            <div id="todayContent" class="today-content"></div>
+        </section>
+
+        <!-- 选题库 -->
+        <section id="tab-topics" class="tab-content">
+            <div class="topic-top-controls">
+                <div class="account-lane-switcher" data-account-switcher>
+                    <button class="account-lane active" data-content-account="main" onclick="switchContentAccount('main')">
+                        <span class="account-lane-icon main">大</span>
+                        <span><strong>大号</strong></span>
+                        <i id="topicCountMain">0</i>
+                    </button>
+                    <button class="account-lane" data-content-account="vlog" onclick="switchContentAccount('vlog')">
+                        <span class="account-lane-icon vlog">V</span>
+                        <span><strong>小号</strong></span>
+                        <i id="topicCountVlog">0</i>
+                    </button>
+                </div>
+                <button class="btn-primary" id="newTopicButton" onclick="showTopicForm()">+ 新选题</button>
+            </div>
+
+            <!-- 选题表单 -->
+            <div id="topicForm" class="card form-card" style="display:none">
+                <div class="topic-form-heading">
+                    <span id="topicFormAccountLabel" class="content-account-badge main">大号选题</span>
+                    <small id="topicFormHint">观点要清楚，并写明真实依据来自哪里。</small>
+                </div>
+                <input type="text" id="topicTitle" placeholder="一句话说清选题" class="input">
+                <div class="topic-series-fields">
+                    <input type="text" id="topicSeries" placeholder="系列（选填，例如：AI 工作台）" class="input" list="topicSeriesSuggestions">
+                    <input type="number" id="topicSeriesOrder" placeholder="第几篇" min="0" class="input">
+                </div>
+                <datalist id="topicSeriesSuggestions"></datalist>
+                <input type="text" id="topicSource" placeholder="来源（哪个热点/视频/帖子）" class="input">
+                <input type="text" id="topicTags" placeholder="标签，逗号分隔" class="input">
+                <textarea id="topicAngle" placeholder="独特视角：别人会怎么讲？你要怎么讲？" class="textarea"></textarea>
+                <div class="form-actions">
+                    <button class="btn-primary" onclick="saveTopic()">保存</button>
+                    <button class="btn-ghost" onclick="hideTopicForm()">取消</button>
+                </div>
+            </div>
+
+            <section class="topic-featured-section" id="topicFeaturedSection">
+                <header>
+                    <div>
+                        <span class="topic-section-kicker">FOCUS</span>
+                        <h3>最近与重要</h3>
+                    </div>
+                    <p>最新选题自动出现，标记重要后会优先保留在这里。</p>
+                </header>
+                <div id="topicFeaturedGrid" class="topic-featured-grid"></div>
+            </section>
+
+            <section class="topic-directory-panel">
+                <header class="topic-directory-header">
+                    <div>
+                        <h3>所有选题</h3>
+                        <p>默认只显示标题，点击后查看来源、角度和其他细节。</p>
+                    </div>
+                    <div class="topic-directory-actions">
+                        <div class="topic-status-filters" role="tablist" aria-label="选题状态筛选">
+                            <button class="active" data-topic-status="all" onclick="setTopicStatusFilter('all')">全部</button>
+                            <button data-topic-status="idea" onclick="setTopicStatusFilter('idea')">点子</button>
+                            <button data-topic-status="scripting" onclick="setTopicStatusFilter('scripting')">写稿中</button>
+                            <button data-topic-status="filming" onclick="setTopicStatusFilter('filming')">定稿</button>
+                            <button data-topic-status="done" onclick="setTopicStatusFilter('done')">已发布</button>
+                        </div>
+                        <button class="topic-trash-toggle" id="topicTrashToggle" onclick="toggleTopicTrash()">垃圾箱 <b id="topicTrashCount">0</b></button>
+                    </div>
+                </header>
+                <div id="topicSeriesDirectory" class="topic-series-directory"></div>
+            </section>
+
+            <div class="topic-trash-backdrop" id="topicTrashBackdrop" aria-hidden="true" onclick="if(event.target===this)toggleTopicTrash(false)">
+                <aside class="topic-trash-drawer" id="topicTrashPanel" aria-label="选题垃圾箱">
+                    <header>
+                        <div><h3>选题垃圾箱</h3><p>不占用选题库空间，需要时再从这里捡回来。</p></div>
+                        <button onclick="toggleTopicTrash(false)" aria-label="关闭垃圾箱">×</button>
+                    </header>
+                    <div id="topicTrashList" class="topic-trash-list"></div>
+                </aside>
+            </div>
+
+            <div class="topic-detail-backdrop" id="topicDetailBackdrop" aria-hidden="true" onclick="if(event.target===this)closeTopicDetail()">
+                <aside class="topic-detail-drawer" id="topicDetailDrawer" aria-label="选题详情">
+                    <header>
+                        <span id="topicDetailStatus" class="topic-detail-status"></span>
+                        <button onclick="closeTopicDetail()" aria-label="关闭详情">×</button>
+                    </header>
+                    <div id="topicDetailContent" class="topic-detail-content"></div>
+                    <footer id="topicDetailActions" class="topic-detail-actions"></footer>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 灵感：ima 与抖音收藏 -->
+        <section id="tab-inspirations" class="tab-content">
+            <div class="idea-source-tabs" role="tablist" aria-label="灵感来源">
+                <button class="active" id="ideaTabIma" role="tab" aria-selected="true" onclick="switchIdeaSource('ima')">
+                    ima <span id="ideaTabImaCount">0</span>
+                </button>
+                <button id="ideaTabDouyin" role="tab" aria-selected="false" onclick="switchIdeaSource('douyin')">
+                    抖音收藏 <span id="ideaTabDouyinCount">0</span>
+                </button>
+            </div>
+
+            <section class="idea-unified-panel active" id="ideaPanelIma" role="tabpanel">
+                <div class="idea-panel-header">
+                    <div><h3>ima 知识库</h3><p>同步你自己创建的知识库，需要时可转成选题。</p></div>
+                    <div class="idea-panel-actions">
+                        <button class="inspiration-sync-btn" id="btnSyncIma" onclick="syncImaNotes()">同步 ima</button>
+                        <span class="idea-action-status" id="imaSyncStatus">当前显示本地缓存</span>
+                    </div>
+                </div>
+                <div class="idea-stream-toolbar">
+                    <label class="idea-search">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                        <input id="ideaSearch" type="search" placeholder="搜索 ima 标题或摘要" oninput="setIdeaSearch(this.value)">
+                    </label>
+                    <select id="ideaSort" onchange="setIdeaSort(this.value)" aria-label="灵感排序">
+                        <option value="newest">最新同步</option>
+                        <option value="oldest">最早同步</option>
+                    </select>
+                </div>
+                <div class="idea-result-meta"><span id="ideaResultCount">0 条笔记</span><small id="ideaStreamNotice">打开页面只读取本地缓存。</small></div>
+                <div id="inspirationGrid" class="idea-stream-grid"><div class="empty-hint">正在读取 ima 缓存…</div></div>
+                <button id="ideaLoadMore" class="idea-load-more" onclick="loadMoreIdeas()" style="display:none">再看 12 条</button>
+            </section>
+
+            <section class="idea-unified-panel" id="ideaPanelDouyin" role="tabpanel" hidden>
+                <div class="idea-panel-header">
+                    <div><h3>抖音收藏视频</h3><p>只显示最近三天，按照你的收藏时间分组。</p></div>
+                    <div class="douyin-actions">
+                        <button class="douyin-sync-btn" id="btnDouyinSync" onclick="douyinSync()">同步最新收藏</button>
+                        <button class="douyin-analyze-btn" id="btnDouyinAnalyze" onclick="douyinAnalyze()">分析未处理收藏</button>
+                        <button class="btn-ghost" onclick="showSettings('douyin')">登录与设置</button>
+                    </div>
+                </div>
+                <span class="douyin-status" id="douyinStatus"></span>
+
+                <div class="douyin-login-prompt" id="douyinLoginPrompt" style="display:none;">
+                    <div class="douyin-login-prompt-icon">🔐</div>
+                    <div class="douyin-login-prompt-text"><strong>尚未登录抖音</strong><span>需要扫码登录一次，之后会保持登录状态</span></div>
+                    <button class="douyin-login-btn" id="btnDouyinLogin" onclick="douyinLogin()">打开扫码窗口</button>
+                </div>
+
+                <div class="douyin-stats compact" id="douyinStats">
+                    <div class="douyin-stat-card"><span class="douyin-stat-num" id="douyinStatTotal">0</span><span class="douyin-stat-label">本地收藏</span></div>
+                    <div class="douyin-stat-card"><span class="douyin-stat-num" id="douyinStatNew">0</span><span class="douyin-stat-label">待分析</span></div>
+                    <div class="douyin-stat-card"><span class="douyin-stat-num" id="douyinStatInsp">0</span><span class="douyin-stat-label">灵感记录</span></div>
+                </div>
+
+                <div class="douyin-video-section">
+                    <div class="douyin-video-header">
+                        <h3>最近三天收藏</h3>
+                        <div class="douyin-batch-actions" id="douyinBatchActions">
+                            <label class="douyin-select-all"><input type="checkbox" id="douyinSelectAll" onchange="toggleDouyinSelectAll(this.checked)"> 全选</label>
+                            <span class="douyin-selected-count" id="douyinSelectedCount">已选 0 个</span>
+                            <button class="douyin-btn-analyze-selected" id="btnAnalyzeSelected" onclick="douyinAnalyzeSelected()" disabled>分析选中视频</button>
+                        </div>
+                    </div>
+                    <div class="douyin-video-grid" id="douyinVideoGrid"><div class="empty-hint">正在读取本地收藏视频…</div></div>
+                </div>
+
+                <div class="douyin-analysis-section" id="douyinAnalysisSection" style="display:none;">
+                    <h3>AI 分析结果</h3>
+                    <div class="douyin-summary" id="douyinSummary"></div>
+                    <div class="douyin-inspiration-list" id="douyinInspirationList"></div>
+                </div>
+            </section>
+        </section>
+
+        <!-- 脚本编辑 -->
+        <section id="tab-scripts" class="tab-content">
+            <div class="scripts-layout">
+                <!-- 左侧脚本列表 -->
+                <div class="scripts-sidebar">
+                    <div class="script-library-header">
+                        <div class="script-sidebar-switcher" data-account-switcher aria-label="切换脚本账号">
+                            <button class="account-lane active" data-script-account="main" onclick="switchScriptAccount('main')">
+                                <strong>大号</strong><i id="scriptCountMain">0</i>
+                            </button>
+                            <button class="account-lane" data-script-account="vlog" onclick="switchScriptAccount('vlog')">
+                                <strong>小号</strong><i id="scriptCountVlog">0</i>
+                            </button>
+                            <button class="account-lane" data-script-account="ad" onclick="switchScriptAccount('ad')">
+                                <strong>广告</strong><i id="scriptCountAd">0</i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="script-list-heading">
+                        <span>进行中</span><b id="scriptDraftCount">0</b>
+                        <div class="script-heading-actions">
+                            <button class="script-new-button" id="scriptNewButton" onclick="createVaultScript()" title="在知识库对应目录里新建一个脚本文件">＋ 新脚本</button>
+                            <button class="script-trash-toggle" id="scriptTrashToggle" onclick="toggleScriptTrash()">垃圾箱 <b id="scriptTrashCount">0</b></button>
+                            <button class="vlog-quick-button" id="vlogQuickButton" onclick="startVlogQuickRecord()" style="display:none">+ 记录</button>
+                        </div>
+                    </div>
+                    <div id="scriptsList" class="scripts-list"></div>
+                    <details class="script-final-archive" id="scriptFinalArchive" ontoggle="handleScriptFinalToggle(this)">
+                        <summary><span>已定稿</span><b id="scriptFinalCount">0</b><small>折叠存放</small></summary>
+                        <div id="scriptsFinalList" class="scripts-list scripts-final-list"></div>
+                    </details>
+                </div>
+                <!-- 右侧编辑器 -->
+                <div class="script-editor-area">
+                    <div id="scriptEditor" class="script-editor">
+                        <div class="editor-placeholder"><p>从左侧选择一个脚本</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="script-trash-backdrop" id="scriptTrashBackdrop" aria-hidden="true" onclick="if(event.target===this)toggleScriptTrash(false)">
+                <aside class="script-trash-drawer" aria-label="脚本垃圾箱">
+                    <header>
+                        <div><h3>脚本垃圾箱</h3><p>先暂存不想继续写的内容，需要时可以恢复。</p></div>
+                        <button onclick="toggleScriptTrash(false)" aria-label="关闭垃圾箱">×</button>
+                    </header>
+                    <div id="scriptTrashList" class="script-trash-list"></div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 工作计划 -->
+        <section id="tab-weekly" class="tab-content">
+            <div class="calendar-toolbar">
+                <div class="calendar-title-block">
+                    <span class="calendar-eyebrow">MONTHLY PLANNER</span>
+                    <h2 id="weekLabel" aria-live="polite">本月</h2>
+                    <p class="calendar-toolbar-note"><span class="calendar-live-dot"></span>有计划日期带颜色标记 · 点击日期查看当天计划</p>
+                </div>
+                <div class="calendar-actions">
+                    <button class="calendar-nav-button" onclick="changeWeek(-1)" aria-label="上个月">←</button>
+                    <button class="calendar-today-button" onclick="goToCurrentMonth()">今天</button>
+                    <button class="calendar-nav-button" onclick="changeWeek(1)" aria-label="下个月">→</button>
+                    <button class="btn-primary btn-sm calendar-new-button" onclick="showPlanForm()">+ 新任务</button>
+                </div>
+            </div>
+
+            <!-- 新任务表单 -->
+            <div id="planForm" class="card form-card calendar-plan-form" style="display:none">
+                <input type="hidden" id="planEditId">
+                <label class="calendar-field calendar-date-field">
+                    <span>日期</span>
+                    <input type="date" id="planDate" class="input">
+                </label>
+                <label class="calendar-field calendar-title-field">
+                    <span>任务</span>
+                    <input type="text" id="planTitle" placeholder="任务标题" class="input">
+                </label>
+                <label class="calendar-field calendar-time-field">
+                    <span>开始</span>
+                    <input type="time" id="planStart" class="input" step="3600">
+                </label>
+                <label class="calendar-field calendar-time-field">
+                    <span>结束</span>
+                    <input type="time" id="planEnd" class="input" step="3600">
+                </label>
+                <label class="calendar-field calendar-desc-field">
+                    <span>说明</span>
+                    <textarea id="planDesc" placeholder="描述（可选）" class="textarea"></textarea>
+                </label>
+                <div class="form-actions">
+                    <button class="btn-primary" onclick="savePlan()">保存</button>
+                    <button class="btn-ghost" onclick="hidePlanForm()">取消</button>
+                </div>
+            </div>
+
+            <!-- 月历 -->
+            <div class="calendar-scroll">
+                <div class="calendar-weekdays" aria-hidden="true">
+                    <span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span>
+                </div>
+                <div class="monthly-calendar" id="weeklyPlans" aria-label="月历"></div>
+            </div>
+
+            <div class="calendar-legend" aria-label="工作日和休息日图例">
+                <span class="calendar-legend-item"><i class="legend-swatch legend-workday"></i>工作日</span>
+                <span class="calendar-legend-item"><i class="legend-swatch legend-makeup"></i>调休上班</span>
+                <span class="calendar-legend-item"><i class="legend-swatch legend-rest"></i>休息日</span>
+                <span class="calendar-legend-item"><i class="legend-swatch legend-holiday"></i>法定节假日</span>
+                <span id="calendarHolidaySource" class="calendar-source-note">节假日按国务院安排标注</span>
+            </div>
+            <aside id="calendarHoverCard" class="calendar-hover-card" hidden role="dialog" aria-label="当天完整时间轴"></aside>
+
+            <!-- 月计划统计 -->
+            <div class="week-summary" id="weekSummary" style="display:none">
+                <span class="month-summary-label">本月任务</span>
+                <span class="week-stat">待办 <strong id="weekTodoCount">0</strong></span>
+                <span class="week-stat">进行中 <strong id="weekDoingCount">0</strong></span>
+                <span class="week-stat">已完成 <strong id="weekDoneCount">0</strong></span>
+            </div>
+        </section>
+
+        <!-- 三行日记 -->
+        <section id="tab-journal" class="tab-content">
+            <div class="card journal-form">
+                <div class="journal-row">
+                    <label>今天做了什么</label>
+                    <textarea id="journalDid" placeholder="一句话说清楚" class="textarea"></textarea>
+                </div>
+                <div class="journal-row">
+                    <label>感受如何</label>
+                    <textarea id="journalFeeling" placeholder="真实的感受，不用修饰" class="textarea"></textarea>
+                </div>
+                <div class="journal-row">
+                    <label>明天计划</label>
+                    <textarea id="journalPlan" placeholder="最重要的一件事" class="textarea"></textarea>
+                </div>
+                <div class="journal-row">
+                    <label>心情指数</label>
+                    <div class="mood-selector" id="moodSelector">
+                        <button class="mood-btn" data-mood="1">1</button>
+                        <button class="mood-btn" data-mood="2">2</button>
+                        <button class="mood-btn active" data-mood="3">3</button>
+                        <button class="mood-btn" data-mood="4">4</button>
+                        <button class="mood-btn" data-mood="5">5</button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn-primary" onclick="saveJournal()">保存日记</button>
+            <button class="btn-secondary" id="btnSyncImaJournal" onclick="syncIma()">同步到 Obsidian</button>
+                    <span class="sync-status" id="syncStatus"></span>
+                </div>
+            </div>
+            <div class="card journal-history-card">
+                <h3>历史日记</h3>
+                <div id="journalHistory"></div>
+            </div>
+        </section>
+
+        <!-- 身心健康 -->
+        <section id="tab-health" class="tab-content">
+            <div class="health-grid">
+                <div class="card">
+                    <h3>今日运动</h3>
+                    <div class="exercise-toggle">
+                        <label class="switch">
+                            <input type="checkbox" id="exerciseDone">
+                            <span class="slider"></span>
+                        </label>
+                        <span id="exerciseLabel">还没动</span>
+                    </div>
+                    <input type="text" id="exerciseType" placeholder="运动类型（跑步/力量/散步...）" class="input">
+                    <div class="exercise-minutes">
+                        <label>时长（分钟）</label>
+                        <input type="number" id="exerciseMinutes" value="0" min="0" max="300" class="input input-small">
+                    </div>
+                    <input type="text" id="exerciseNote" placeholder="备注（可选）" class="input">
+                    <button class="btn-primary" onclick="saveHealth()">保存</button>
+                    <div class="week-stats">本周运动 <strong id="weekExerciseDays">0</strong> 天</div>
+                </div>
+                <div class="card">
+                    <h3>自我奖励机制</h3>
+                    <div class="reward-rules">
+                        <div class="reward-item">
+                            <span class="reward-icon">1</span>
+                            <span>连续打卡7天 → 一杯好咖啡</span>
+                        </div>
+                        <div class="reward-item">
+                            <span class="reward-icon">2</span>
+                            <span>完成一条视频 → 休息半天</span>
+                        </div>
+                        <div class="reward-item">
+                            <span class="reward-icon">3</span>
+                            <span>运动满5天/周 → 周日放空</span>
+                        </div>
+                        <div class="reward-item">
+                            <span class="reward-icon">4</span>
+                            <span>写满30篇日记 → 给自己买个礼物</span>
+                        </div>
+                    </div>
+                    <p class="reward-note">规则可以随时改，重点是：完成了就兑现，别骗自己。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div class="assistant-drawer-backdrop" id="assistantDrawerBackdrop" onclick="closeAssistantChat()"></div>
+    <aside class="assistant-drawer" id="assistantDrawer" aria-hidden="true" aria-label="和{{ assistant_name }}对话">
+        <header class="assistant-chat-header">
+            <div class="assistant-mini-avatar assistant-symbol" aria-hidden="true"><span>AI</span></div>
+            <div><strong>和{{ assistant_name }}聊聊</strong><small><span></span> 工作台 + 本地知识库</small></div>
+            <button class="assistant-clear-btn" onclick="clearAssistantChat()" title="清空本地对话">清空</button>
+            <button class="assistant-drawer-close" onclick="closeAssistantChat()" aria-label="关闭">×</button>
+        </header>
+        <div class="assistant-knowledge-strip" id="assistantKnowledgeStatus">正在连接脚本库、选题库、我的资料和知识库…</div>
+        <div class="assistant-chat-messages" id="assistantChatMessages"></div>
+        <div class="assistant-prompts">
+            <button onclick="askAssistant('我今天先做什么？')">今天先做什么</button>
+            <button onclick="askAssistant('结合我的选题库和知识库，下一条最值得拍什么？')">从资料找选题</button>
+            <button onclick="askAssistant('我的脚本库里，哪些内容值得继续完善？')">检查脚本库</button>
+            <button onclick="askAssistant('根据我的资料和内容边界，提醒我最近要避开什么？')">核对我的边界</button>
+        </div>
+        <div class="assistant-chat-status" id="assistantChatStatus"></div>
+        <div class="assistant-chat-composer">
+            <button class="assistant-mic-btn" id="assistantMicBtn" onclick="toggleAssistantListening()" title="点击后开始说话"><span></span></button>
+            <textarea id="assistantChatInput" rows="1" maxlength="2000" placeholder="问{{ assistant_name }}：我今天先做什么？" onkeydown="handleAssistantInputKey(event)"></textarea>
+            <button class="assistant-send-btn" id="assistantSendBtn" onclick="sendAssistantMessage()">发送</button>
+        </div>
+        <div class="assistant-voice-settings">
+            <label for="assistantVoiceSelect">{{ assistant_name }}的声音</label>
+            <select id="assistantVoiceSelect" onchange="saveAssistantVoice(this.value)"><option value="">自动选择自然中文声线</option></select>
+            <button onclick="previewAssistantVoice()">试听</button>
+            <button id="assistantVoiceToggle" onclick="toggleAssistantVoice()">语音回复：开</button>
+        </div>
+        <div class="assistant-voice-note">麦克风只在点击后启用，不会后台持续录音</div>
+    </aside>
+    <button class="assistant-fab" id="assistantFab" onclick="openAssistantChat()" aria-label="打开{{ assistant_name }}助手">
+        <span class="assistant-fab-avatar assistant-symbol" aria-hidden="true"><b>AI</b></span>
+        <span><strong>问{{ assistant_name }}</strong><small>说话或输入问题</small></span>
+        <i></i>
+    </button>
+</div>
+<!-- 资料库录入弹窗 -->
+<div id="memoryModal" class="note-modal-overlay memory-modal-overlay" style="display:none">
+    <div class="note-modal memory-modal">
+        <button class="note-modal-close" onclick="closeMemoryForm()">&times;</button>
+        <div class="memory-modal-title">
+            <span>MY LIBRARY</span>
+            <h3 id="memoryModalTitle">记下一条</h3>
+            <p id="memoryModalSubtitle">以后写脚本或问{{ assistant_name }}时，工作台会按需找到它。</p>
+        </div>
+        <input type="hidden" id="memoryEditId">
+        <input type="hidden" id="memoryItemType" value="about">
+        <div class="memory-type-switch" id="memoryTypeSwitch">
+            <button type="button" data-memory-form-type="about" onclick="setMemoryFormType('about')">关于我</button>
+            <button type="button" data-memory-form-type="memo" onclick="setMemoryFormType('memo')">备忘录</button>
+        </div>
+        <label>标题<input id="memoryTitle" class="input" maxlength="120" placeholder="给这条内容起个容易找到的名字"></label>
+        <label>内容<textarea id="memoryContent" class="textarea memory-content-input" maxlength="12000" placeholder="写下需要保存的内容"></textarea></label>
+        <div class="memory-form-grid" id="memoryAboutFields">
+            <label>分类<select id="memoryCategory" class="input"><option value="identity">基础信息</option><option value="experience" selected>过往经历</option><option value="value">观点与价值观</option><option value="preference">喜好与表达偏好</option><option value="goal">目标与当前阶段</option><option value="boundary">边界与禁区</option></select></label>
+            <label>适用范围<select id="memoryAccountScope" class="input"><option value="all">所有内容</option><option value="main">仅大号</option><option value="vlog">仅小号 Vlog</option></select></label>
+            <label>发生/生效日期<input id="memoryDate" type="date" class="input"></label>
+        </div>
+        <label class="memory-tags-field">标签（可选）<input id="memoryTags" class="input" placeholder="用逗号分隔，方便以后搜索"></label>
+        <div class="memory-permission-options">
+            <label id="memoryPrivateOption"><input id="memoryPrivate" type="checkbox" onchange="syncMemoryPrivacyState()"><span><strong>设为私密</strong><small>本机加密、默认隐藏、禁止 AI 读取</small></span></label>
+            <label><input id="memoryAIEnabled" type="checkbox"><span><strong>允许 AI 使用</strong><small>生成相关内容时可能发送给已配置的模型</small></span></label>
+            <label><input id="memoryPinned" type="checkbox"><span><strong>标为重要</strong><small>固定排在前面，更容易找到</small></span></label>
+        </div>
+        <div id="memoryFormStatus" class="memory-form-status"></div>
+        <div class="memory-modal-actions"><button id="memoryDeleteButton" class="btn-danger-soft" onclick="deleteMemoryFromForm()" style="display:none">删除</button><span></span><button class="btn-ghost" onclick="closeMemoryForm()">取消</button><button id="memorySaveButton" class="btn-primary" onclick="saveMemory()">保存到本机</button></div>
+    </div>
+</div>
+
+<!-- AI 资料读取预览 -->
+<div id="memoryPreviewModal" class="note-modal-overlay" style="display:none">
+    <div class="note-modal memory-preview-modal">
+        <button class="note-modal-close" onclick="closeMemoryPreview()">&times;</button>
+        <span class="memory-eyebrow">AI CONTEXT PREVIEW</span>
+        <h3>AI 当前可读取的资料</h3>
+        <p>这里只显示允许 AI 使用且不是私密内容的资料，真正生成时还会按任务继续筛选。</p>
+        <div class="memory-preview-controls"><input id="memoryPreviewQuery" class="input" placeholder="输入一个任务，例如：普通人如何使用 AI"><select id="memoryPreviewScope" class="input"><option value="all">所有内容</option><option value="main">大号</option><option value="vlog">小号 Vlog</option></select><button class="btn-primary" onclick="runMemoryContextPreview()">查看</button></div>
+        <div id="memoryPreviewResult" class="memory-preview-result"></div>
+    </div>
+</div>
+<!-- 笔记正文弹窗 -->
+<div id="noteModal" class="note-modal-overlay" style="display:none">
+    <div class="note-modal note-reader-modal">
+        <button class="note-modal-close" onclick="closeNoteModal()">&times;</button>
+        <h3 id="noteModalTitle"></h3>
+        <div class="note-reader-meta" id="noteModalMeta"></div>
+        <div class="note-modal-content" id="noteModalContent"></div>
+        <div class="note-file-search" id="noteFileSearch" style="display:none">
+            <p id="noteFileSearchHint"></p>
+            <div class="note-file-search-bar">
+                <input id="noteFileSearchInput" class="input" type="search" placeholder="输入这份文件里的关键词" onkeydown="if(event.key==='Enter') searchImaFileContent()">
+                <button class="btn-primary" onclick="searchImaFileContent()">搜索内容</button>
+            </div>
+            <div id="noteFileSearchResult" class="note-file-search-result"></div>
+            <div class="note-file-actions">
+                <button class="btn-ghost" onclick="openImaOriginal()">打开 ima 原文</button>
+                <small id="noteImaOpenStatus"></small>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新闻事件详情 -->
+<div id="hotspotDetailModal" class="note-modal-overlay" style="display:none" onclick="closeHotspotDetail(event)">
+    <div class="note-modal hotspot-detail-modal" onclick="event.stopPropagation()">
+        <button class="note-modal-close" onclick="closeHotspotDetail()">&times;</button>
+        <div id="hotspotDetailContent" class="hotspot-detail-content"></div>
+    </div>
+</div>
+<!-- 设置弹窗 -->
+<div id="settingsModal" class="note-modal-overlay" style="display:none">
+    <div class="note-modal settings-modal settings-modal-wide">
+        <button class="note-modal-close" onclick="closeSettings()">&times;</button>
+        <div class="settings-title"><div><h3>设置中心</h3><p>个人资料、接口和本地数据都从这里管理</p></div></div>
+        <div class="settings-layout">
+            <div class="settings-nav">
+                <button class="settings-tab active" data-settings="profile" onclick="switchSettingsTab('profile')">个人资料</button>
+                <button class="settings-tab" data-settings="accounts" onclick="switchSettingsTab('accounts')">账号矩阵</button>
+                <button class="settings-tab" data-settings="ai" onclick="switchSettingsTab('ai')">AI 模型</button>
+                <button class="settings-tab" data-settings="ima" onclick="switchSettingsTab('ima')">ima</button>
+                <button class="settings-tab" data-settings="obsidian" onclick="switchSettingsTab('obsidian')">Obsidian</button>
+                <button class="settings-tab" data-settings="douyin" onclick="switchSettingsTab('douyin')">抖音</button>
+                <button class="settings-tab" data-settings="news" onclick="switchSettingsTab('news')">新闻来源</button>
+                <button class="settings-tab" data-settings="local" onclick="switchSettingsTab('local')">本地数据</button>
+            </div>
+            <div class="settings-panels">
+                <section class="settings-panel active" data-panel="profile">
+                    <h4>名称与个人资料</h4><div class="field-grid">
+                    <label>工作台名称<input id="cfgAppName" class="input" placeholder="创作者工作台"></label><label>助手名称<input id="cfgAssistantName" class="input" placeholder="小助手"></label>
+                    <label>称呼<input id="cfgDisplayName" class="input"></label><label>职业<input id="cfgOccupation" class="input"></label></div>
+                    <label>个人经历<textarea id="cfgBackground" class="textarea"></textarea></label>
+                    <label>内容方向<textarea id="cfgDirection" class="textarea"></textarea></label>
+                    <label>目标受众<input id="cfgAudience" class="input"></label>
+                    <label>优势<input id="cfgStrengths" class="input"></label>
+                    <label>表达风格<input id="cfgTone" class="input"></label>
+                    <label>重点关注（逗号分隔）<textarea id="cfgInterests" class="textarea compact"></textarea></label>
+                    <label>降低权重的话题<textarea id="cfgAvoid" class="textarea compact"></textarea></label>
+                </section>
+                <section class="settings-panel" data-panel="accounts">
+                    <div class="account-settings-heading">
+                        <div><span class="settings-kicker">CREATOR ACCOUNTS</span><h4>三个账号，各有职责</h4><p>头像、账号资料和每日数据都保存在本机。没有官方接口时，也可以快速手动更新。</p></div>
+                        <span class="local-only-badge">● 本地存储</span>
+                    </div>
+                    <div id="accountSettingsList" class="account-settings-list">
+                        <div class="matrix-loading">正在载入账号配置…</div>
+                    </div>
+                    <p class="settings-hint">抖音官方数据接口可在后续取得权限后接入；当前手动录入是稳定的备用入口。粉丝画像可填写年龄、地区和兴趣关键词。</p>
+                </section>
+                <section class="settings-panel" data-panel="ai">
+                    <h4>OpenAI 兼容 AI 接口</h4>
+                    <label>接口地址<input id="cfgAiUrl" class="input" placeholder="https://api.example.com/v1/chat/completions"></label>
+                    <label>模型名称<input id="cfgAiModel" class="input" placeholder="deepseek-chat"></label>
+                    <label>API Key<input type="password" id="deepseekApiKeyInput" class="input" placeholder="留空则保留原 Key"></label>
+                    <button class="btn-ghost" onclick="testAIConnection()">测试连接</button><span id="aiTestStatus" class="settings-status"></span>
+                </section>
+                <section class="settings-panel" data-panel="obsidian">
+                    <h4>Obsidian 本地知识库</h4><label class="switch-line"><input type="checkbox" id="cfgObsidianEnabled">启用 Obsidian 联动</label>
+                    <label>仓库路径<input id="cfgObsidianVault" class="input" placeholder="例如：C:\Users\你的名字\Documents\Obsidian"></label>
+                    <label>允许读取的一级目录（逗号分隔，留空表示全部）<input id="cfgObsidianRoots" class="input" placeholder="例如：创作,学习"></label>
+                    <div class="knowledge-link-settings">
+                        <strong>助手读取范围</strong>
+                        <label class="switch-line"><input type="checkbox" id="cfgKnowledgeEnabled">让助手使用本地知识库</label>
+                        <label class="switch-line"><input type="checkbox" id="cfgKnowledgeWiki">优先读取维基页</label>
+                        <label class="switch-line"><input type="checkbox" id="cfgKnowledgeCreative">读取选题与脚本镜像</label>
+                        <label class="switch-line"><input type="checkbox" id="cfgKnowledgeRaw">维基没覆盖时读取原始素材</label>
+                    </div>
+                    <p class="settings-hint">查询顺序是维基 → 工作台当前数据 → 原始素材。创作中心仍以工作台数据库为唯一真源；私密或明确禁止 AI 的笔记不会进入助手上下文。</p>
+                    <button class="btn-ghost" onclick="testObsidianConnection()">检查仓库</button><span id="obsidianTestStatus" class="settings-status"></span>
+                </section>
+                <section class="settings-panel" data-panel="ima">
+                    <h4>ima 灵感知识库</h4><label class="switch-line"><input type="checkbox" id="cfgImaEnabled">启用 ima 联动</label>
+                    <label>Client ID<input id="cfgImaClient" class="input" placeholder="ima OpenAPI Client ID"></label>
+                    <label>API Key<input type="password" id="cfgImaApiKey" class="input" placeholder="已配置时留空即可"></label>
+                    <p class="settings-hint">只同步你自己创建的知识库；加入的公共订阅库不会进入灵感。</p>
+                    <button class="btn-ghost" onclick="testImaConnection()">测试 ima</button><span id="imaTestStatus" class="settings-status"></span>
+                </section>
+                <section class="settings-panel" data-panel="douyin">
+                    <h4>抖音收藏</h4><div id="douyinConfigState" class="config-state">正在检查登录状态…</div>
+                    <label class="switch-line"><input type="checkbox" id="cfgDouyinAuto">每天自动同步</label>
+                    <label>同步时间（0-23 点）<input id="cfgDouyinHour" type="number" min="0" max="23" class="input"></label>
+                    <button class="btn-ghost" onclick="startDouyinLogin()">登录 / 重新登录</button>
+                </section>
+                <section class="settings-panel" data-panel="news">
+                    <h4>热点与简报</h4><label class="switch-line"><input type="checkbox" id="cfgNewsAuto">进入页面自动更新</label>
+                    <label>简易版条数<input id="cfgDigestCount" type="number" min="5" max="50" class="input"></label>
+                    <div id="newsSourceChecks" class="source-checks"></div>
+                </section>
+                <section class="settings-panel" data-panel="local">
+                    <h4>数据只保存在这台电脑</h4><p id="localDataPath" class="path-box"></p>
+                    <div class="local-actions"><button class="btn-ghost" onclick="openLocalFolder('root')">打开数据目录</button><button class="btn-ghost" onclick="openLocalFolder('files')">打开创作文件</button><button class="btn-ghost" onclick="backupLocalData()">立即备份</button><button class="btn-danger-soft" onclick="shutdownWorkbench()">退出工作台</button></div>
+                </section>
+            </div>
+        </div>
+        <div class="settings-footer">
+            <span class="settings-status" id="settingsStatus"></span><button class="btn-ghost" onclick="closeSettings()">取消</button><button class="btn-primary" onclick="saveSettings()">保存全部设置</button>
+        </div>
+    </div>
+</div>
+    <script src="/static/app.js?v=96"></script>
+    <script src="/static/home-globe.js?v=3"></script>
+</body>
+</html>
