@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""创作者工作台 v5.3 - 本地 Flask 服务。"""
+"""创作者工作台 v1.0 - 本地 Flask 服务。"""
 import hashlib
 import base64
 import binascii

@@ -2,6 +2,10 @@
 
 一个运行在本机的个人创作工作台，用来集中管理热点、灵感、选题、脚本、周计划、日记和账号数据。它提供可选的 AI、Obsidian、ima 与抖音收藏联动；个人数据默认只保存在使用者自己的电脑上。
 
+![总览](docs/screenshots/dashboard.webp)
+
+> 截图中的内容均为演示数据，不包含任何真实用户信息。
+
 ## 主要功能
 
 - 热点聚合与个性化简报
@@ -10,6 +14,14 @@
 - 多账号资料与数据快照
 - 可自定义名称的本地创作助手
 - 可选的 OpenAI 兼容接口、Obsidian、ima 和抖音收藏联动
+
+### 界面预览
+
+<img src="docs/screenshots/weekly.webp" width="49%" alt="周计划"> <img src="docs/screenshots/topics.webp" width="49%" alt="选题库">
+
+发布前的合规审查，内置抖音、小红书、视频号、B 站四个平台的规则包，**不填 AI Key 也能用**：
+
+![脚本库与合规审查](docs/screenshots/scripts-detail.webp)
 
 ## 快速开始（Windows）
 
